@@ -1,0 +1,57 @@
+# CareerPilot AI: Production Dependencies
+
+# Core & Typing
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+python-dotenv>=1.0.1
+loguru>=0.7.2
+
+# Agentic Orchestration & Graph
+langgraph>=0.2.0
+langchain>=0.2.0
+langchain-core>=0.2.0
+
+# Layer 1 & 5: Scraping & Browser Automation
+httpx>=0.27.0
+curl_cffi>=0.7.0
+playwright>=1.44.0
+python-jobspy>=1.1.50
+beautifulsoup4>=4.12.3
+lxml>=5.2.0
+
+# Layer 2: NLP, Extraction & Layout
+spacy>=3.7.4
+docling>=1.0.0
+faiss-cpu>=1.8.0
+numpy>=1.26.4
+pandas>=2.2.2
+
+# Layer 3: Machine Learning & Scoring
+scikit-learn>=1.5.0
+xgboost>=2.0.3
+lightgbm>=4.3.0
+sentence-transformers>=3.0.0
+torch>=2.2.0
+shap>=0.45.1
+
+# Layer 4: GenAI Tailoring & Document Generation
+instructor>=1.3.3
+groq>=0.9.0
+huggingface-hub>=0.23.0
+openai>=1.30.0
+rendercv>=1.14.0
+
+# Layer 6: Voice Interview & WebSockets
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+faster-whisper>=1.0.2
+cartesia>=1.0.0
+python-multipart>=0.0.9
+
+# Testing
+pytest>=8.2.0
+pytest-asyncio>=0.23.7
+
+# Robust resume extraction
+pypdf>=5.0.0
+python-docx>=1.1.0

@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerPilot AI | Jobs, Resume & Interview</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    code, pre {font-family:'JetBrains Mono',monospace;}
+
+    /* CareerPilot UI v4 — cohesive light SaaS design tokens. */
+    :root {
+      color-scheme: light;
+      --cp-page: #f8fafc;
+      --cp-card: #ffffff;
+      --cp-primary: #2563eb;
+      --cp-indigo: #4f46e5;
+      --cp-text: #0f172a;
+      --cp-muted: #64748b;
+      --cp-border: #e2e8f0;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--cp-page); color:var(--cp-text); font-family:'Inter',sans-serif; }
+    .glass-card {
+      background:var(--cp-card);
+      border:1px solid var(--cp-border);
+      border-radius:16px;
+      box-shadow:0 4px 18px rgba(15,23,42,.035);
+      backdrop-filter:none;
+    }
+    .glass-card:hover {border-color:#cbd5e1;}
+    .app-header { box-shadow:0 2px 12px rgba(15,23,42,.035); }
+    .app-tabs { min-width:0; scrollbar-width:thin; }
+    .app-tab { display:inline-flex; align-items:center; justify-content:center; gap:7px; white-space:nowrap; padding:10px 14px; border-radius:9px; color:#475569; font-weight:600; font-size:12px; transition:background .15s,color .15s; }
+    .app-tab:hover {color:#1d4ed8;background:#fff;}
+    .app-tab-active,.app-tab-active:hover {color:#fff;background:#2563eb;box-shadow:0 2px 7px rgba(37,99,235,.18);}
+    .app-count { display:inline-flex; align-items:center; justify-content:center; min-width:21px; height:19px; background:rgba(37,99,235,.1); border-radius:6px; color:#1d4ed8; font-size:10px; padding:0 4px; }
+    .app-tab-active .app-count {color:#fff;background:rgba(255,255,255,.2);}
+    .app-primary-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; padding:10px 14px; background:#2563eb; color:#fff; font-weight:700; font-size:12px; white-space:nowrap; }
+    .app-primary-btn:hover {background:#1d4ed8;}
+    .app-filter { border:1px solid #e2e8f0; border-radius:9px; padding:7px 11px; background:#fff; color:#475569; font-size:12px; font-weight:600; white-space:nowrap; }
+    .app-filter:hover {background:#eff6ff; color:#1d4ed8;}
+    .app-filter-active,.app-filter-active:hover {background:#2563eb;color:#fff;border-color:#2563eb;}
+    .app-help > summary::marker { color:#2563eb; }
+    #job-search-input,#voice-answer-textarea,#tab3-paste-textarea {font-size:13px;}
+    #target-job-card h4 {line-height:1.45;}
+    #company-cards-container > article {display:flex;flex-direction:column;gap:12px;}
+    #company-cards-container > article > .border-t {margin-top:auto;}
+    #toast-container > div {background:#fff!important;box-shadow:0 8px 28px rgba(15,23,42,.12);}
+    #job-modal,#resume-modal {backdrop-filter:blur(5px);}
+    #job-modal .glass-card,#resume-modal .glass-card {background:#fff!important;}
+    #tailored-bullets-container article {box-shadow:none;}
+    #live-source-status {font-size:12px;}
+    #stat-total-jobs,#stat-ready-count,#stat-applied-count {font-variant-numeric:tabular-nums;}
+    .app-help summary:focus-visible { outline:2px solid #2563eb;outline-offset:3px; }
+    input,textarea,select { color:#0f172a; }
+    input::placeholder,textarea::placeholder { color:#94a3b8;opacity:1; }
+    button,a,summary { touch-action:manipulation; }
+    button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible { outline:2px solid #2563eb;outline-offset:2px; }
+    /* Primary action buttons generated from legacy templates must have strong contrast. */
+    .bg-blue-600:not(.app-count),.bg-indigo-600,.bg-emerald-600,.bg-teal-600,
+    button.bg-blue-600, a.bg-blue-600, button.from-blue-600, a.from-blue-600,
+    button.from-indigo-600,button.from-emerald-500,a.from-emerald-500,
+    button.bg-indigo-600,button.bg-purple-600 { color:#fff !important; }
+    .bg-gradient-to-r.from-blue-600, .bg-gradient-to-r.from-indigo-600 { background-image:none;background-color:#2563eb; }
+    .bg-gradient-to-r.from-emerald-500 { background-image:none;background-color:#059669; }
+    .bg-gradient-to-br.from-blue-600 {background-image:none;background-color:#2563eb;}
+    .shadow-lg,.shadow-2xl {box-shadow:0 6px 20px rgba(15,23,42,.08);}
+    ::-webkit-scrollbar {width:7px;height:7px;}
+    ::-webkit-scrollbar-track {background:#f8fafc;}
+    ::-webkit-scrollbar-thumb {background:#cbd5e1;border-radius:8px;}
+    ::-webkit-scrollbar-thumb:hover {background:#94a3b8;}
+    @media(max-width:1279px){.app-header-inner {justify-content:space-between;}.app-tabs{order:3; flex-basis:100%;}}
+    @media(max-width:640px){.app-tab{padding:9px 10px;font-size:11px;}main{padding-top:14px!important;} .glass-card{border-radius:13px;} }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-900 min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- Dynamic Floating Toast Notification Container -->
+  <div id="toast-container" class="fixed top-20 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Compact responsive navigation; original handlers/IDs are preserved. -->
+  <header class="app-header sticky top-0 z-40 bg-white border-b border-slate-200">
+    <div class="app-header-inner max-w-[1500px] mx-auto px-4 lg:px-6 py-2 flex flex-wrap xl:flex-nowrap items-center gap-3">
+      <div class="flex items-center gap-2.5 shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-sm" aria-hidden="true">CP</div>
+        <div class="font-extrabold text-slate-900 tracking-tight text-base whitespace-nowrap">CareerPilot <span class="text-blue-600">AI</span></div>
+      </div>
+      <nav class="app-tabs flex-1 flex items-center gap-1 p-1 rounded-xl bg-slate-100 overflow-x-auto" aria-label="Main navigation">
+        <button type="button" onclick="switchTab('scoring')" id="tab-btn-scoring" class="app-tab app-tab-active" aria-current="page"><i data-lucide="target" class="w-4 h-4"></i><span>ATS Match</span></button>
+        <button type="button" onclick="switchTab('tailoring')" id="tab-btn-tailoring" class="app-tab"><i data-lucide="file-pen-line" class="w-4 h-4"></i><span>Resume Tailor</span></button>
+        <button type="button" onclick="switchTab('voice')" id="tab-btn-voice" class="app-tab"><i data-lucide="mic" class="w-4 h-4"></i><span>Mock Interview</span></button>
+        <button type="button" onclick="switchTab('applicator')" id="tab-btn-applicator" class="app-tab"><i data-lucide="briefcase-business" class="w-4 h-4"></i><span>Live Jobs</span><span class="app-count" id="total-jobs-badge">0</span><span id="applied-nav-badge" class="sr-only">0</span></button>
+      </nav>
+      <button type="button" onclick="openResumeModal()" class="app-primary-btn shrink-0"><i data-lucide="upload" class="w-4 h-4"></i> Upload Resume</button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-[1500px] mx-auto px-4 lg:px-6 py-5 flex-1 w-full space-y-5">
+
+    <!-- Active Resume Profile Banner -->
+    <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 border border-blue-300/20 bg-gradient-to-r from-blue-600 via-white to-white">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-blue-600 font-bold text-lg" id="profile-avatar">
+          SH
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-slate-900 text-base" id="profile-name">Demo Candidate</h3>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-300/20 font-medium" id="profile-exp">1.0 Years Exp</span>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-medium" id="profile-role">Data Scientist</span>
+          </div>
+          <p class="text-xs text-slate-600 mt-0.5" id="profile-subtitle">Upload a resume to personalize your dashboard. Demo mode is available.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openResumeModal()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold border border-slate-200 flex items-center gap-1.5 transition cursor-pointer">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5 text-blue-600"></i> Edit Resume
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 1: ATS MATCH SCORING & EXPLAINABILITY -->
+    <!-- ============================================================= -->
+    <section id="tab-scoring" class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">ATS Match & Analysis</h2>
+          <p class="text-xs text-slate-600 mt-1">Compare your resume with recent jobs. Scores indicate relevance, not hiring chances.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="openCustomJobModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-200 transition flex items-center gap-2 cursor-pointer">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-blue-600"></i> Compare Job Description
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-Column Metric Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+        <!-- Column 1: Candidate Skills -->
+        <div class="glass-card rounded-2xl p-4 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i> Your Extracted Skills
+            </h3>
+            <span class="text-[10px] text-slate-600 font-mono" id="skill-count-badge">8 Skills</span>
+          </div>
+          <div class="space-y-3">
+            <p class="text-xs text-slate-600 leading-relaxed">Skills from your uploaded resume.</p>
+            <div class="flex flex-wrap gap-1.5" id="profile-skills-tags">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+          <div class="pt-2 border-t border-slate-200/80 text-xs text-slate-600">
+            <p><strong class="text-slate-800">Education:</strong> <span id="profile-degree">B.Tech Computer Science</span></p>
+            <p><strong class="text-slate-800">Recent Role:</strong> <span id="profile-recent-role">Data Scientist</span></p>
+          </div>
+        </div>
+
+        <!-- Column 2: verified-date live jobs, shared with Resume Tailoring -->
+        <div class="glass-card rounded-2xl p-4 space-y-4 lg:col-span-1 border-blue-300/20">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i data-lucide="briefcase-business" class="w-4 h-4 text-blue-600"></i> Recent Jobs Matching Your Resume</h3>
+              <p class="text-[11px] text-slate-600 mt-1">Real openings from public job feeds</p>
+            </div>
+            <div class="flex flex-wrap gap-1.5 items-center">
+              <label for="scoring-days" class="sr-only">Jobs posted within</label>
+              <select id="scoring-days" onchange="syncRecentDaysFilter(this.value)" class="rounded-lg border border-slate-200 bg-white text-blue-700 text-[11px] font-bold py-1.5 px-1.5" title="Recent posting period">
+                <option value="2">2 days</option><option value="3" selected>3 days</option><option value="7">7 days</option><option value="14">14 days</option><option value="30">30 days</option>
+              </select>
+              <button onclick="fetchLiveJobBoards()" class="px-2.5 py-1.5 text-[11px] font-bold rounded-lg bg-blue-50 text-blue-700 border border-blue-200/50 hover:bg-blue-50">↻ Refresh</button>
+            </div>
+          </div>
+          <p id="recent-job-status" class="text-[11px] text-slate-600 leading-relaxed" role="status">Upload a resume to see recent matches.</p>
+          <div id="recent-match-jobs" class="space-y-2" aria-live="polite"></div>
+          <select id="job-dropdown" class="hidden" aria-label="Selected comparison job" onchange="onJobChange()"></select>
+          <div id="target-job-card" class="text-xs text-slate-700 space-y-3 rounded-xl border border-slate-200/80 bg-slate-50 p-4" aria-live="polite"></div>
+          <div class="flex items-center justify-between gap-2 text-[11px]">
+            <button onclick="openCustomJobModal()" class="text-blue-600 hover:text-blue-700 underline underline-offset-2">Or compare your own job description</button>
+            <button onclick="switchTab('applicator')" class="text-slate-700 hover:text-slate-900">All live jobs →</button>
+          </div>
+        </div>
+
+        <!-- Column 3: honest resume/job relevance, never hiring probability -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col gap-4">
+          <div class="flex items-start justify-between gap-2 border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i data-lucide="gauge" class="w-4 h-4 text-emerald-600"></i> Resume Match</h3>
+            <span id="score-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold text-slate-700 bg-slate-100">Awaiting job</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">Relevance to the selected job.</p>
+          <div class="text-center py-4">
+            <div class="inline-flex items-baseline justify-center"><span id="score-display" class="text-5xl font-black text-slate-900">—</span><span id="score-unit" class="text-2xl font-bold text-slate-500 ml-1">%</span></div>
+            <p id="score-threshold-text" class="text-xs text-slate-600 mt-2">Select a job to compare.</p>
+          </div>
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200"><div id="score-progress-bar" class="h-full rounded-full bg-blue-500 transition-all duration-300" style="width:0%"></div></div>
+          <div id="score-context" class="text-xs rounded-xl bg-white border border-slate-200 p-3 text-slate-600 leading-relaxed">Skill and role relevance; not an employer ATS result.</div>
+          <button id="btn-recalculate" onclick="triggerRecalculateWithAnimation()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-blue-700 text-xs font-semibold flex items-center justify-center gap-2"><i id="recalculate-icon" data-lucide="refresh-cw" class="w-3.5 h-3.5"></i><span id="recalculate-label">Recalculate Match</span></button>
+        </div>
+      </div>
+
+      <!-- Feature Attribution & Gap Analysis -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Positive Strengths -->
+        <div class="glass-card rounded-2xl p-4 space-y-3 border-emerald-300/20">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
+                ✓
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm">Matching Skills</h3>
+            </div>
+            <span class="text-[10px] text-emerald-600 font-mono font-bold">Verified</span>
+          </div>
+          <div class="space-y-2.5" id="positive-drivers-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Missing Criteria & Suggestions -->
+        <div class="glass-card rounded-2xl p-4 space-y-3 border-rose-300/20">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xs">
+                !
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm">Missing Skills & Tips</h3>
+            </div>
+            <span class="text-[10px] text-rose-600 font-mono font-bold">Review</span>
+          </div>
+          <div class="space-y-2.5" id="negative-drivers-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- TAB 2: RESUME TAILOR (STAR METHOD & JD ALIGNMENT) -->
+    <!-- ============================================================= -->
+    <section id="tab-tailoring" class="space-y-4 hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">Resume Tailoring (STAR)</h2>
+          <p class="text-xs text-slate-600 mt-1">Refine real project details for your selected job.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <select id="tailor-job-select" onchange="onTailorJobSelectChange()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 outline-none cursor-pointer">
+            <!-- Dynamically populated -->
+          </select>
+          <button onclick="triggerTailoringAction()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-600 hover:to-indigo-500 text-slate-900 font-bold text-xs shadow-lg shadow-blue-100/30 transition flex items-center gap-2 cursor-pointer active:scale-95">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Tailor Resume
+          </button>
+        </div>
+      </div>
+
+      <!-- Compact optional STAR help; no information lost. -->
+      <details class="app-help rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs">
+        <summary class="font-semibold text-blue-700 cursor-pointer">How does STAR work?</summary>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-4 gap-2 text-slate-700">
+          <p><strong>S — Situation:</strong> Context</p>
+          <p><strong>T — Task:</strong> Goal</p>
+          <p><strong>A — Action:</strong> What you did</p>
+          <p><strong>R — Result:</strong> Verified outcome</p>
+        </div>
+        <p class="mt-2 text-slate-600">Only include results supported by your resume.</p>
+      </details>
+
+      <!-- Before and After Comparison -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- Rephrased Bullets List -->
+        <div class="glass-card rounded-2xl p-4 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <i data-lucide="arrow-left-right" class="w-4 h-4 text-indigo-600"></i> Original Resume vs Tailored STAR Bullets
+            </h3>
+            <span class="text-[10px] bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold" id="tailor-boost-badge">
+              Uses only resume-verified details
+            </span>
+          </div>
+
+          <div class="space-y-4" id="tailored-bullets-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Readable resume notes preview; copy/download remain functional -->
+        <div class="glass-card rounded-2xl p-4 space-y-4 border-blue-300/20">
+          <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200 pb-3">
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i data-lucide="file-check" class="w-4 h-4 text-blue-600"></i> Tailored Resume Preview</h3>
+              <p class="text-xs text-slate-600 mt-1">For <span id="tailor-target-company" class="text-blue-700">your selected job</span></p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button onclick="copyTailoredResume()" class="text-xs bg-slate-100 hover:bg-slate-200 text-blue-700 px-3 py-2 rounded-lg border border-slate-200">Copy notes</button>
+              <button onclick="downloadTailoredResume()" class="text-xs bg-blue-600 hover:bg-blue-500 text-slate-900 font-bold px-3 py-2 rounded-lg">Download .txt</button>
+            </div>
+          </div>
+          <div class="rounded-xl border border-blue-200/60 bg-blue-50 p-4 space-y-3">
+            <p class="text-xs font-bold text-slate-900">What changes?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px]">
+              <div><p class="font-bold text-blue-700">Clearer wording</p><p class="text-slate-600 mt-1">Cleaner bullets.</p></div>
+              <div><p class="font-bold text-blue-700">Relevant skills</p><p class="text-slate-600 mt-1">From your resume.</p></div>
+              <div><p class="font-bold text-emerald-700">Verified details</p><p class="text-slate-600 mt-1">No invented claims.</p></div>
+            </div>
+          </div>
+          <div id="tailored-resume-preview" class="space-y-4" aria-live="polite"></div>
+          <pre id="tailored-resume-full-text" class="hidden" aria-hidden="true"></pre>
+          <p class="text-[11px] text-slate-500 leading-relaxed">Editable notes only. Review before applying.</p>
+          <button onclick="applyWithTailoredResumeFromTailorTab()" class="w-full px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-900 font-bold text-xs hover:opacity-90">View Job / Apply ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- TAB 3: LIVE 30-50 MINUTE COMPREHENSIVE MOCK INTERVIEW -->
+    <!-- ============================================================= -->
+    <section id="tab-voice" class="space-y-4 hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight">AI Mock Interview</h2>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-300/30 font-mono font-bold" id="interview-session-badge">
+              45-minute target
+            </span>
+          </div>
+          <p class="text-xs text-slate-600 mt-1">Resume-based questions, follow-ups and feedback. Speak or type your answers.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <!-- Live Session Stopwatch -->
+          <div class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 font-mono text-xs flex items-center gap-2 text-blue-700">
+            <i data-lucide="clock" class="w-4 h-4 text-blue-600"></i>
+            <span>Session: <strong id="interview-timer-display" class="text-slate-900">00:00 / 45:00 target</strong></span>
+          </div>
+          <button id="btn-start-interview" onclick="toggleInterviewStart()" class="px-4 py-2 rounded-xl bg-blue-600 text-slate-900 font-bold text-xs cursor-pointer">Start Interview</button>
+          <button onclick="finishInterview()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 cursor-pointer">Finish</button>
+          <button onclick="restartInterviewSession()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-200 transition flex items-center gap-2 cursor-pointer">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-blue-600"></i> Restart
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Resume Ingestion & Status Header Card (Direct in Tab 3) -->
+      <div class="p-4 rounded-2xl bg-gradient-to-r from-white via-white to-blue-600 border border-blue-300/30 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-600 text-slate-900 font-black text-sm flex items-center justify-center shrink-0 shadow-lg shadow-blue-100/30" id="tab3-cand-avatar">
+            SH
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="text-sm font-bold text-slate-900 tracking-wide" id="tab3-cand-name">Demo Candidate</h3>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-300/30 font-semibold" id="tab3-cand-role">Data Scientist</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200" id="tab3-cand-exp">1.0 Years Exp</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center gap-1 font-mono font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Resume Ready
+              </span>
+            </div>
+            <p class="text-xs text-slate-600 mt-1 flex items-center gap-2.5 flex-wrap">
+              <span><strong class="text-blue-700 font-mono" id="tab3-cand-proj-count">2</strong> Projects Extracted</span> &bull;
+              <span><strong class="text-indigo-700 font-mono" id="tab3-cand-skill-count">8</strong> Skills Extracted</span> &bull;
+              <span class="text-slate-600" id="tab3-cand-degree">B.Tech Computer Science</span>
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <button onclick="document.getElementById('file-upload-input').click()" class="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-50 text-blue-700 font-bold text-xs border border-blue-300/40 transition flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i> Upload Resume
+          </button>
+          <button onclick="toggleTab3PasteDrawer()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-200 transition flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="clipboard-paste" class="w-3.5 h-3.5 text-indigo-600"></i> Paste Text
+          </button>
+        </div>
+      </div>
+
+      <!-- Inline Quick Paste Drawer in Tab 3 -->
+      <div id="tab3-paste-drawer" class="hidden p-4 rounded-2xl bg-white border border-indigo-300/40 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-indigo-700 flex items-center gap-1.5">
+            <i data-lucide="file-text" class="w-4 h-4 text-indigo-600"></i> Paste Resume Text
+          </span>
+          <button onclick="toggleTab3PasteDrawer()" class="text-slate-600 hover:text-slate-900 text-xs cursor-pointer">✕ Close</button>
+        </div>
+        <textarea id="tab3-paste-textarea" rows="5" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 outline-none focus:border-indigo-300 leading-relaxed font-mono" placeholder="Paste your entire resume text here (Candidate Name, Target Role, Projects, Technical Skills, Education)..."></textarea>
+        <div class="flex justify-end gap-2.5">
+          <button onclick="toggleTab3PasteDrawer()" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-xs hover:bg-slate-200 cursor-pointer">Cancel</button>
+          <button onclick="handleTab3PasteIngestion()" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-500 hover:to-indigo-500 text-slate-900 font-bold text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Generate Interview Questions
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Roadmap (Dynamic Stage Buttons) -->
+      <div class="p-3 bg-white rounded-2xl border border-slate-200/80 space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-slate-700 flex items-center gap-2">
+            <i data-lucide="layers" class="w-4 h-4 text-blue-600"></i>
+            Interview Progress
+          </span>
+          <span class="text-slate-600 font-mono text-[11px]" id="current-stage-title">
+            Stage 1: Candidate Introduction & Career Trajectory
+          </span>
+        </div>
+        <div class="flex flex-wrap gap-1.5" id="questions-roadmap-container">
+          <!-- 15 Pills dynamically injected -->
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Interactive Question & Answer Box -->
+        <div class="lg:col-span-2 glass-card rounded-2xl p-4 space-y-4">
+          <!-- Question Box with Audio Speak Button -->
+          <div class="p-4 rounded-xl bg-blue-50 border border-blue-300/30 flex items-start justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-xl bg-blue-600 text-slate-900 flex items-center justify-center font-black shrink-0 mt-0.5">
+                AI
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-300/30 font-mono font-bold" id="interview-qstage-tag">Stage 1</span>
+                  <p class="text-[11px] font-bold text-blue-600 uppercase tracking-wider" id="interview-question-category">Career Overview & Technical Trajectory</p>
+                </div>
+                <p class="text-sm font-semibold text-slate-900 mt-1.5 leading-relaxed" id="voice-question-text">
+                  "Could you please walk me through your background, your technical journey in Data Science & Machine Learning, and what motivated you to pursue this career path?"
+                </p>
+              </div>
+            </div>
+            <button onclick="speakCurrentQuestion()" title="Replay Question Audio" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-blue-600 border border-slate-200 shrink-0 transition cursor-pointer">
+              <i data-lucide="volume-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Your Answer (Speak via Mic or Type):</label>
+              <span class="text-[11px] text-slate-500 font-mono" id="voice-status-indicator">Click Start Interview when ready</span>
+            </div>
+            <textarea id="voice-answer-textarea" rows="5" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-800 focus:ring-2 focus:ring-cyan-500 focus:border-blue-300 outline-none leading-relaxed" placeholder="Click 'Use Microphone' or type your technical answer here..."></textarea>
+          </div>
+
+          <!-- HR Follow-Up Section (Dynamically Activated after Candidate Answer) -->
+          <div id="hr-followup-panel" class="hidden p-4 rounded-xl bg-indigo-50 border border-indigo-300/40 space-y-3">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600 text-slate-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                  HR
+                </div>
+                <div>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-300/30 font-mono font-bold">HR Hiring Manager Follow-Up</span>
+                  <p class="text-xs font-semibold text-indigo-700 mt-1 leading-relaxed" id="hr-followup-text">
+                    "Following up on what you just explained..."
+                  </p>
+                </div>
+              </div>
+              <button onclick="speakFollowUpQuestion()" title="Replay Follow-up Audio" class="p-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/60 shrink-0 transition cursor-pointer">
+                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            <div class="space-y-1.5 pt-1">
+              <textarea id="hr-followup-textarea" rows="2" class="w-full bg-slate-50 border border-indigo-200/60 rounded-lg p-2.5 text-xs text-slate-800 focus:ring-1 focus:ring-purple-400 outline-none leading-relaxed" placeholder="Clarify or expand on your answer for the hiring manager..."></textarea>
+              <div class="flex justify-end gap-2">
+                <button onclick="submitFollowUpAnswer()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-600 text-slate-900 font-bold text-xs transition flex items-center gap-1.5 cursor-pointer">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i> Submit Follow-Up Clarification
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap justify-between items-center gap-3 pt-2">
+            <button onclick="toggleMicrophone()" id="voice-mic-button" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center gap-2 border border-slate-200 transition cursor-pointer">
+              <i data-lucide="mic" class="w-4 h-4 text-blue-600" id="mic-icon"></i> <span id="voice-mic-label">Use Microphone</span>
+            </button>
+            <div class="flex items-center gap-2">
+              <button onclick="nextInterviewQuestion()" id="btn-next-question" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs border border-slate-200 transition flex items-center gap-1.5 cursor-pointer">
+                Next Question <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="evaluateInterviewAnswer()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-500 hover:to-blue-500 text-slate-900 font-bold text-xs shadow-lg shadow-blue-100/30 transition flex items-center gap-2 cursor-pointer active:scale-95">
+                <i data-lucide="send" class="w-4 h-4"></i> Submit Answer
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Rubric Scorecard & Model Answer Reveal -->
+        <div class="glass-card rounded-2xl p-4 space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h3 class="font-bold text-slate-900 text-sm">Answer Feedback</h3>
+              <span id="rubric-verdict-pill" class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 text-slate-600 border border-slate-200 font-mono">
+                AWAITING ANSWER
+              </span>
+            </div>
+
+            <div class="space-y-3 mt-4">
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span class="text-slate-700">Technical Knowledge</span>
+                  <span class="text-blue-600 font-mono" id="score-acc">- / 5</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div id="bar-acc" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span class="text-slate-700">Depth & Reasoning</span>
+                  <span class="text-indigo-600 font-mono" id="score-depth">- / 5</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div id="bar-depth" class="bg-indigo-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span class="text-slate-700">Communication & Structure</span>
+                  <span class="text-emerald-600 font-mono" id="score-comm">- / 5</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div id="bar-comm" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Feedback Details -->
+            <div class="p-3.5 bg-white rounded-xl border border-slate-200 text-xs space-y-2.5 mt-4">
+              <div>
+                <p class="font-bold text-slate-700 text-[11px] uppercase">AI Feedback:</p>
+                <p class="text-slate-600 text-xs mt-0.5" id="rubric-feedback">Provide your answer and click 'Submit Answer' for honest rubric scoring.</p>
+              </div>
+
+              <!-- Model Ideal Answer (Strictly Hidden Until Candidate Submits!) -->
+              <div class="pt-2 border-t border-slate-200" id="model-answer-section">
+                <div id="model-answer-locked" class="p-3 bg-slate-50 rounded-xl border border-dashed border-slate-200 text-slate-500 flex items-center gap-2">
+                  <i data-lucide="lock" class="w-4 h-4 text-slate-600 shrink-0"></i>
+                  <span class="text-[11px]">Submit your answer to reveal an example response.</span>
+                </div>
+                <div id="model-answer-unlocked" class="hidden space-y-1">
+                  <p class="font-bold text-blue-600 text-[11px] uppercase flex items-center gap-1.5">
+                    <i data-lucide="unlock" class="w-3.5 h-3.5"></i> Example Answer:
+                  </p>
+                  <p class="text-slate-700 text-[11px] leading-relaxed" id="rubric-model-answer"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-200/80">
+            <button onclick="nextInterviewQuestion()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-blue-600 font-bold text-xs border border-slate-200 transition flex items-center justify-center gap-1.5 cursor-pointer">
+              Next Question (<span id="next-qnum-btn">2</span>/<span id="total-qnum-btn">15</span>) ➡️
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- TAB 4: LIVE MATCHING JOBS & 1-CLICK APPLICATION HUB -->
+    <!-- ============================================================= -->
+    <section id="tab-applicator" class="space-y-4 hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">Live Job Opportunities</h2>
+          <p class="text-xs text-slate-600 mt-1">Recent openings matched to your resume.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="fetchLiveJobBoards()" id="btn-fetch-live" class="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-500 hover:to-blue-500 text-slate-900 font-bold text-xs shadow-lg shadow-blue-100/30 transition flex items-center gap-2 cursor-pointer active:scale-95">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="fetch-live-icon"></i> <span id="fetch-live-label">Refresh Jobs</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 border border-blue-300/20 space-y-3">
+        <div class="flex flex-wrap items-end gap-4">
+          <label class="text-xs font-semibold text-slate-700">Posted within
+            <select id="live-days" onchange="fetchLiveJobBoards()" class="block mt-1 px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900">
+              <option value="2">2 days</option><option value="3" selected>3 days</option>
+              <option value="7">7 days</option><option value="14">14 days</option><option value="30">30 days</option>
+            </select>
+          </label>
+          <label class="text-xs font-semibold text-slate-700">Location
+            <select id="live-location" onchange="fetchLiveJobBoards()" class="block mt-1 px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900">
+              <option value="all">All locations</option>
+              <option value="india">India</option>
+              <option value="remote">Remote</option>
+            </select>
+          </label>
+          <div class="text-xs text-slate-600 flex-1" id="live-source-status" role="status" aria-live="polite">
+            Open this tab to search live public feeds. No sample jobs are shown as live.
+          </div>
+        </div>
+        <details class="app-help text-xs text-slate-600">
+          <summary class="cursor-pointer text-blue-700 font-semibold">Job sources & application information</summary>
+          <p id="live-job-meta" class="mt-2"></p>
+          <p class="mt-2">Results require a verified posting date. Apply opens the original website; no application is sent automatically. Email drafts require manual review and attachment.</p>
+          <p class="mt-1">Draft email: <span id="hub-resume-name">Upload a resume</span></p>
+        </details>
+      </div>
+
+      <!-- Application Stats Banner -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="glass-card rounded-2xl p-4 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+            <i data-lucide="building-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-600 uppercase font-bold">Recent Jobs</p>
+            <p class="text-xl font-black text-slate-900" id="stat-total-jobs">0</p>
+          </div>
+        </div>
+        <div class="glass-card rounded-2xl p-4 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-600 uppercase font-bold">Applied</p>
+            <p class="text-xl font-black text-emerald-600" id="stat-applied-count">0</p>
+          </div>
+        </div>
+        <div class="glass-card rounded-2xl p-4 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-600 uppercase font-bold">Apply Links</p>
+            <p class="text-xl font-black text-amber-600" id="stat-ready-count">0</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Search & Domain Filter Bar -->
+      <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <!-- Search Input -->
+        <div class="relative flex-1 min-w-[260px]">
+          <i data-lucide="search" class="w-4 h-4 text-slate-600 absolute left-3 top-3"></i>
+          <input type="text" id="job-search-input" oninput="onJobSearchInput(event)" placeholder="Search jobs, companies, skills..." class="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-900 outline-none focus:border-blue-300">
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button onclick="filterJobs('all')" id="filter-btn-all" class="px-3 py-1.5 rounded-lg bg-blue-600 text-slate-900 font-bold text-xs transition cursor-pointer">
+            All (<span id="count-all">0</span>)
+          </button>
+          <button onclick="filterJobs('ai_ml')" id="filter-btn-ai_ml" class="app-filter">
+            AI/ML (<span id="count-ai_ml">0</span>)
+          </button>
+          <button onclick="filterJobs('data_science')" id="filter-btn-data_science" class="app-filter">
+            Data Science (<span id="count-data_science">0</span>)
+          </button>
+          <button onclick="filterJobs('analytics')" id="filter-btn-analytics" class="app-filter">
+            Analytics (<span id="count-analytics">0</span>)
+          </button>
+          <button onclick="filterJobs('fresh')" id="filter-btn-fresh" class="app-filter">
+            48h (<span id="count-fresh">0</span>)
+          </button>
+          <button onclick="filterJobs('applied')" id="filter-btn-applied" class="app-filter">
+            Applied (<span id="count-applied">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Company Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="company-cards-container">
+        <!-- Dynamically rendered company cards -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- MODAL 1: UPLOAD / CUSTOM RESUME MODAL -->
+  <!-- ============================================================= -->
+  <div id="resume-modal" class="fixed inset-0 bg-white backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto hidden">
+    <div class="glass-card bg-white rounded-2xl max-w-2xl w-full max-h-[88vh] flex flex-col border border-slate-200 shadow-2xl my-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-200 p-5 shrink-0">
+        <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i> Upload / Edit Resume
+        </h3>
+        <button onclick="closeResumeModal()" class="text-slate-600 hover:text-slate-900 text-lg p-1 cursor-pointer">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-5 flex-1">
+        <!-- Quick Preset Selector -->
+        <div>
+          <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Sample Profiles</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-1.5">
+            <button onclick="loadPresetCandidate('shraddha')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold text-left border border-blue-300/30 cursor-pointer">
+              👩‍💻 Shraddha (1y AI & DS)
+            </button>
+            <button onclick="loadPresetCandidate('arjun')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold text-left border border-slate-200 cursor-pointer">
+              👨‍💻 Arjun (3.5y ML & Vision)
+            </button>
+            <button onclick="loadPresetCandidate('priya')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold text-left border border-slate-200 cursor-pointer">
+              👩‍💻 Priya (5y Full Stack)
+            </button>
+            <button onclick="loadPresetCandidate('rohan')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold text-left border border-slate-200 cursor-pointer">
+              👨‍💻 Rohan (4y Backend & Dist)
+            </button>
+          </div>
+        </div>
+
+        <!-- Drag & Drop / File Input -->
+        <div>
+          <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Upload a File</label>
+          <div class="mt-1.5 border-2 border-dashed border-slate-200 hover:border-blue-300 rounded-xl p-5 text-center cursor-pointer transition bg-white" onclick="document.getElementById('file-upload-input').click()">
+            <i data-lucide="upload-cloud" class="w-7 h-7 text-blue-600 mx-auto mb-1.5"></i>
+            <p class="text-xs text-slate-800 font-semibold">Choose a resume or drag it here</p>
+            <p class="text-[11px] text-blue-600 font-mono mt-1" id="upload-status-text">PDF, DOCX, or TXT (server-side text extraction; max 10 MB)</p>
+            <input type="file" id="file-upload-input" class="hidden" accept=".pdf,.txt,.docx" onchange="handleFileUpload(event)">
+          </div>
+        </div>
+
+        <!-- Quick Paste Text Alternative -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Or Paste Resume Text</label>
+            <button type="button" onclick="handleModalPasteExtraction()" class="text-[11px] text-blue-600 hover:text-blue-700 font-bold underline cursor-pointer flex items-center gap-1">
+              <i data-lucide="sparkles" class="w-3 h-3"></i> Extract Details
+            </button>
+          </div>
+          <textarea id="modal-paste-raw-resume" rows="3" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:border-blue-300 outline-none leading-relaxed font-mono" placeholder="Paste full resume text here to auto-fill Name, Projects, Skills, and Degree..."></textarea>
+        </div>
+
+        <!-- Option B: Manual / Review Details -->
+        <div class="space-y-3">
+          <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Review Resume Details</label>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[10px] text-slate-600 font-semibold uppercase">Candidate Full Name:</label>
+              <input type="text" id="input-cand-name" placeholder="Candidate Full Name" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-300 mt-1" value="Demo AI Candidate">
+            </div>
+            <div>
+              <label class="text-[10px] text-slate-600 font-semibold uppercase">Target Role / Title:</label>
+              <input type="text" id="input-cand-role" placeholder="Target Role (e.g. Data Scientist)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-300 mt-1" value="AI / Data Scientist">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[10px] text-slate-600 font-semibold uppercase">Total Experience (Years):</label>
+              <input type="number" step="0.5" id="input-cand-exp" placeholder="Total Experience (Years)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-300 mt-1" value="1.0">
+            </div>
+            <div>
+              <label class="text-[10px] text-slate-600 font-semibold uppercase">Highest Education Degree:</label>
+              <input type="text" id="input-cand-degree" placeholder="Highest Degree" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-300 mt-1" value="M.Sc in Data Science, IIIT Lucknow">
+            </div>
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-600 font-semibold uppercase">Technical Skills (Comma separated):</label>
+            <input type="text" id="input-cand-skills" placeholder="Python, SQL, Pandas, NumPy, Machine Learning..." class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-300 mt-1" value="Python, LangGraph, LangChain, RAG, Generative AI, LLMs, FastAPI, Docker, PyTorch, Deep Learning, LoRA, QLoRA, ChromaDB, FAISS, Groq API, Redis, PostgreSQL, Streamlit, Scikit-Learn, Pandas, NumPy, SQL">
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-600 font-semibold uppercase">Past Experience / Projects (For Tailoring & Deep-Dive Interview):</label>
+            <textarea id="input-cand-bullets" rows="4" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-300 mt-1 leading-relaxed font-mono" placeholder="KhetiLens AI: Built multi-agent smart farming platform...">KhetiLens AI – Multi-Agent Smart Farming & Agricultural Decision Platform: Developed a multi-agent AI farming assistant coordinating specialized agents for crop recommendations, fertilizer guidance, market insights, and farming risk analysis using LangGraph, LangChain, Groq, and FastAPI.
+Multi-Source AI Knowledge Assistant: Built a RAG-based AI assistant using LangChain, ChromaDB, and Hugging Face embeddings for semantic retrieval from PDF, DOCX, TXT, and YouTube sources with Groq LLaMA 3.3 in Streamlit.
+Atlas Intelligence – Multi-Agent Decision Platform: Developed a multi-agent decision support system with Human-in-the-Loop (HITL) workflows, risk-based decision branching, and task tracing using LangGraph and FastAPI.
+AI Study Buddy & Academic Reasoning Assistant: Built an interactive AI study companion for students using RAG, vector search, and LLM prompt engineering to summarize complex coursework and generate conceptual quizzes.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex justify-end gap-3 p-4 border-t border-slate-200 bg-[#F8FAFC] rounded-b-2xl shrink-0">
+        <button onclick="closeResumeModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold hover:bg-slate-200 cursor-pointer">Cancel</button>
+        <button onclick="saveCustomResume()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-500 hover:to-blue-500 text-slate-900 font-bold text-xs shadow-lg shadow-blue-100/30 cursor-pointer">
+          Save Resume
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- MODAL 2: CUSTOM JOB DESCRIPTION MODAL -->
+  <!-- ============================================================= -->
+  <div id="job-modal" class="fixed inset-0 bg-white backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto hidden">
+    <div class="glass-card bg-white rounded-2xl max-w-xl w-full max-h-[88vh] flex flex-col border border-slate-200 shadow-2xl my-auto">
+      
+      <!-- Job Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-200 p-5 shrink-0">
+        <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-5 h-5 text-indigo-600"></i> Enter Target Job Description
+        </h3>
+        <button onclick="closeCustomJobModal()" class="text-slate-600 hover:text-slate-900 text-lg p-1 cursor-pointer">✕</button>
+      </div>
+
+      <!-- Job Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-4 flex-1">
+        <input type="text" id="custom-job-title" placeholder="Job Title (e.g. Data Scientist / ML Engineer)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-indigo-300" value="Data Scientist - Analytics & Forecasting">
+        <input type="text" id="custom-job-company" placeholder="Company Name (e.g. Google, Zomato, Startup)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-indigo-300" value="Target Tech Corp">
+        <div class="grid grid-cols-2 gap-3">
+          <input type="number" step="0.5" id="custom-job-exp" placeholder="Min Experience Required (Years)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-indigo-300" value="1.0">
+          <input type="text" id="custom-job-skills" placeholder="Required Skills (Comma separated)" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-indigo-300" value="Python, SQL, Machine Learning, Pandas, Scikit-Learn">
+        </div>
+        <textarea id="custom-job-desc" rows="4" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-indigo-300 leading-relaxed" placeholder="Paste full raw job description text here...">We are looking for a Data Scientist with 1+ years experience in Python, SQL, Pandas, and building machine learning models.</textarea>
+      </div>
+
+      <!-- Job Modal Footer -->
+      <div class="flex justify-end gap-3 p-4 border-t border-slate-200 bg-[#F8FAFC] rounded-b-2xl shrink-0">
+        <button onclick="closeCustomJobModal()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold hover:bg-slate-200 cursor-pointer">Cancel</button>
+        <button onclick="saveCustomJob()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-600 hover:to-indigo-500 text-slate-900 font-bold text-xs shadow-lg shadow-blue-100/30 cursor-pointer">
+          Set as Target Job
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // The dashboard remains functional if the external icons CDN is blocked.
+    window.lucide = window.lucide || {createIcons() {}};
+    lucide.createIcons();
+
+    // =========================================================================
+    // 0. Notification Toast Helper
+    // =========================================================================
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      const isSuccess = type === 'success';
+      const isWarning = type === 'warning';
+      const borderColor = isSuccess ? 'border-blue-300/50 text-blue-700' : (isWarning ? 'border-rose-300/50 text-rose-700' : 'border-amber-300/50 text-amber-700');
+      const iconColor = isSuccess ? 'text-blue-600' : (isWarning ? 'text-rose-600' : 'text-amber-600');
+      const iconName = isSuccess ? 'check-circle-2' : (isWarning ? 'alert-triangle' : 'info');
+
+      toast.className = `pointer-events-auto bg-white/95 border ${borderColor} text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform translate-y-2 opacity-0 backdrop-blur-md`;
+      toast.innerHTML = `
+        <i data-lucide="${iconName}" class="w-4 h-4 ${iconColor} shrink-0"></i>
+        <span>${escapeHTML(message)}</span>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 20);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-4');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // =========================================================================
+    // 1. Core State
+    // =========================================================================
+    let activeCandidate = {
+      name: "Demo Candidate",
+      role: "AI / Data Scientist",
+      experience: 0,
+      degree: "Sample M.Sc. Data Science",
+      recentRole: "Sample AI/DS Candidate",
+      skills: [
+        "Python", "LangGraph", "LangChain", "RAG", "Generative AI", "LLMs",
+        "FastAPI", "Docker", "PyTorch", "Deep Learning", "LoRA", "QLoRA",
+        "ChromaDB", "FAISS", "Groq API", "Redis", "PostgreSQL", "Streamlit",
+        "Scikit-Learn", "Pandas", "NumPy", "SQL"
+      ],
+      bullets: [
+        "KhetiLens AI – Multi-Agent Smart Farming & Agricultural Decision Platform: Developed a multi-agent AI farming assistant coordinating specialized agents for crop recommendations, fertilizer guidance, market insights, and farming risk analysis using LangGraph, LangChain, Groq, and FastAPI.",
+        "Multi-Source AI Knowledge Assistant: Built a RAG-based AI assistant using LangChain, ChromaDB, and Hugging Face embeddings for semantic retrieval from PDF, DOCX, TXT, and YouTube sources with Groq LLaMA 3.3 in Streamlit.",
+        "Atlas Intelligence – Multi-Agent Decision Platform: Developed a multi-agent decision support system with Human-in-the-Loop (HITL) workflows, risk-based decision branching, and task tracing using LangGraph and FastAPI.",
+        "AI Study Buddy & Academic Reasoning Assistant: Built an interactive AI study companion for students using RAG, vector search, and LLM prompt engineering to summarize complex coursework and generate conceptual quizzes."
+      ]
+    };
+
+    const presetCandidates = {
+      shraddha: {
+        name: "Demo AI Candidate",
+        role: "AI / Data Scientist",
+        experience: 0,
+        degree: "Sample M.Sc. Data Science",
+        recentRole: "Sample AI/DS Candidate",
+        skills: [
+          "Python", "LangGraph", "LangChain", "RAG", "Generative AI", "LLMs",
+          "FastAPI", "Docker", "PyTorch", "Deep Learning", "LoRA", "QLoRA",
+          "ChromaDB", "FAISS", "Groq API", "Redis", "PostgreSQL", "Streamlit",
+          "Scikit-Learn", "Pandas", "NumPy", "SQL"
+        ],
+        bullets: [
+          "KhetiLens AI – Multi-Agent Smart Farming & Agricultural Decision Platform: Developed a multi-agent AI farming assistant coordinating specialized agents for crop recommendations, fertilizer guidance, market insights, and farming risk analysis using LangGraph, LangChain, Groq, and FastAPI.",
+          "Multi-Source AI Knowledge Assistant: Built a RAG-based AI assistant using LangChain, ChromaDB, and Hugging Face embeddings for semantic retrieval from PDF, DOCX, TXT, and YouTube sources with Groq LLaMA 3.3 in Streamlit.",
+          "Atlas Intelligence – Multi-Agent Decision Platform: Developed a multi-agent decision support system with Human-in-the-Loop (HITL) workflows, risk-based decision branching, and task tracing using LangGraph and FastAPI.",
+          "AI Study Buddy & Academic Reasoning Assistant: Built an interactive AI study companion for students using RAG, vector search, and LLM prompt engineering to summarize complex coursework and generate conceptual quizzes."
+        ]
+      },
+      arjun: {
+        name: "Arjun Sharma",
+        role: "AI / ML Engineer",
+        experience: 3.5,
+        degree: "B.Tech Computer Science",
+        recentRole: "AI / ML Engineer at Cognitive Scale AI",
+        skills: ["Python", "PyTorch", "XGBoost", "FastAPI", "Docker", "AWS", "SQL", "Computer Vision", "OpenCV", "Linux"],
+        bullets: [
+          "Real-Time Fraud Detection & Risk Scoring Engine: Built predictive machine learning models using XGBoost and LightGBM processing 500k+ daily banking transactions with 99.4% precision and sub-20ms inference latency.",
+          "Autonomous Edge Vision Inspection System: Engineered real-time defect detection pipelines using YOLOv8, OpenCV, and TensorRT on edge NVIDIA Jetson devices with automated alerting via FastAPI microservices."
+        ]
+      },
+      priya: {
+        name: "Priya Patel",
+        role: "Senior Full Stack Engineer",
+        experience: 5.0,
+        degree: "M.Tech Software Engineering",
+        recentRole: "Lead Frontend Engineer at Razorpay",
+        skills: ["JavaScript", "TypeScript", "React", "Next.js", "Node.js", "GraphQL", "PostgreSQL", "Docker", "Tailwind", "Redis"],
+        bullets: [
+          "Real-Time Merchant Payment Dashboard: Architected micro-frontend portal using React, TypeScript, GraphQL, and Tailwind processing $12M monthly merchant transactions with sub-second page loads.",
+          "High-Throughput Webhook & Event Dispatcher: Engineered an asynchronous Node.js, Express, and Redis pub/sub queue handling 15,000 webhook events/sec with automated exponential-backoff retries."
+        ]
+      },
+      rohan: {
+        name: "Rohan Gupta",
+        role: "Distributed Systems & Backend Engineer",
+        experience: 4.0,
+        degree: "B.Tech Information Technology",
+        recentRole: "Backend Engineer at Swiggy",
+        skills: ["Java", "Spring Boot", "Microservices", "Apache Kafka", "Redis", "PostgreSQL", "Docker", "Kubernetes", "AWS", "gRPC"],
+        bullets: [
+          "Distributed Order Dispatch & Matching Engine: Architected ultra-low latency event-driven order matching service in Java 21 and Spring Boot 3 handling 25,000 orders/minute with Kafka and Redis.",
+          "Multi-Region Database Replication & Failover: Engineered dual-write PostgreSQL and DynamoDB replication system with automated failover and zero data loss under network partitions."
+        ]
+      }
+    };
+
+    // ATS and Tailoring share the same real jobs returned by /api/jobs/recent.
+    // User-entered descriptions stay clearly labeled custom comparisons.
+    let targetJobs = [];
+    let customJobs = [];
+    let liveJobs = [];
+    let liveJobsLoaded = false;
+    let liveJobsLoading = false;
+    let liveRefreshSequence = 0;
+    let liveProfileVersion = 0;
+    let liveJobError = '';
+    let liveAppliedIds = new Set();
+    try { liveAppliedIds = new Set(JSON.parse(localStorage.getItem('careerpilot_marked_applied_v1') || '[]')); } catch (_) {}
+    let resumeUploaded = false;
+    let currentJobIndex = 0;
+    let tailorJobIndex = 0;
+    let currentJobFilter = "all";
+    let searchQuery = "";
+
+    // =========================================================================
+    // 2. Comprehensive 15-Question Technical Interview Lifecycle
+    // =========================================================================
+    let interviewQuestions = [];
+    let currentQuestionIndex = 0;
+    let interviewSecondsElapsed = 0;
+    let timerInterval = null;
+    let isRecording = false;
+    let speechRecognitionInstance = null;
+    let isQuestionAnswered = false;
+
+    function buildCandidateInterviewQuestions() {
+      return [{
+        id:'temporary_intro', stage:'Stage 1', stageTitle:'Stage 1: Introduction', category:'Self introduction',
+        question:`Welcome! Please introduce yourself and tell me about your background.`,
+        model_answer:'Include your education, projects and relevant strengths.',
+        key_concepts:[]
+      }];
+    }
+
+    let questionRequestVersion = 0;
+    let interviewRunning = false;
+    let interviewCompleted = false;
+    let interviewResponses = [];
+    let submittingAnswer = false;
+
+    async function apiJSON(url, options = {}) {
+      const response = await fetch(url, options);
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const msg = typeof result.detail === 'string' ? result.detail : `Request failed (${response.status})`;
+        throw new Error(msg);
+      }
+      return result;
+    }
+
+    async function loadInterviewQuestionsFromBackend() {
+      const reqId = ++questionRequestVersion;
+      document.getElementById('voice-status-indicator').innerText = 'Generating resume-specific questions...';
+      try {
+        const result = await apiJSON('/api/interview/plan', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({candidate:activeCandidate})
+        });
+        if (reqId !== questionRequestVersion) return;
+        interviewQuestions = result.questions;
+        currentQuestionIndex = 0;
+        interviewResponses = [];
+        currentHrFollowUp = null;
+        interviewCompleted = false;
+        resetInterviewClock();
+        renderInterviewRoadmap();
+        displayCurrentInterviewQuestion();
+        document.getElementById('interview-session-badge').innerText =
+          `${result.total_questions} tailored questions • 45-minute target • HR follow-ups`;
+        showToast(`Ready: ${result.total_questions} questions tailored to ${activeCandidate.name}'s resume.`, 'success');
+      } catch (error) {
+        if (reqId !== questionRequestVersion) return;
+        showToast('Could not generate interview plan. Is the Python server running? ' + error.message, 'warning');
+        document.getElementById('voice-status-indicator').innerText = 'Server unavailable';
+      }
+    }
+
+    function resetInterviewClock() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+      interviewRunning = false;
+      interviewSecondsElapsed = 0;
+      const label = document.getElementById('interview-timer-display');
+      if (label) label.innerText = '00:00 / 45:00 target';
+      const startButton = document.getElementById('btn-start-interview');
+      if (startButton) startButton.innerText = 'Start Interview';
+    }
+
+    function toggleInterviewStart() {
+      if (interviewCompleted) restartInterviewSession();
+      if (interviewRunning) {
+        interviewRunning = false;
+        clearInterval(timerInterval);
+        timerInterval = null;
+        document.getElementById('btn-start-interview').innerText = 'Resume Interview';
+        if ('speechSynthesis' in window) speechSynthesis.cancel();
+        if (speechRecognitionInstance && isRecording) speechRecognitionInstance.stop();
+      } else {
+        interviewRunning = true;
+        document.getElementById('btn-start-interview').innerText = 'Pause Interview';
+        startOrResumeInterviewTimer();
+        speakCurrentQuestion();
+      }
+    }
+
+    function finishInterview() {
+      interviewCompleted = true;
+      interviewRunning = false;
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      const mainAnswers = interviewResponses.filter(r => !r.follow_up);
+      const followUps = interviewResponses.filter(r => r.follow_up);
+      const mins = Math.floor(interviewSecondsElapsed/60);
+      const secs = interviewSecondsElapsed%60;
+      const summary = `Interview finished: ${mainAnswers.length}/${interviewQuestions.length} main questions answered, ${followUps.length} follow-ups; actual time ${mins}m ${secs}s. The 45-minute duration is a target, not a guarantee.`;
+      document.getElementById('voice-status-indicator').innerText = summary;
+      document.getElementById('btn-start-interview').innerText = 'Start Again';
+      showToast(summary,'info');
+      alert(summary);
+    }
+
+
+        // Tab Navigation
+    function switchTab(tabId) {
+      ['scoring', 'tailoring', 'voice', 'applicator'].forEach(id => {
+        document.getElementById(`tab-${id}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${id}`);
+        btn.className = 'app-tab';
+        btn.removeAttribute('aria-current');
+      });
+
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      activeBtn.className = 'app-tab app-tab-active';
+      activeBtn.setAttribute('aria-current', 'page');
+      
+      if (tabId === 'scoring' && resumeUploaded && !liveJobsLoaded && !liveJobsLoading) fetchLiveJobBoards();
+      if (tabId === 'voice') {
+        // Keep the current answer and follow-up when switching tabs.
+      }
+      if (tabId === 'applicator') {
+        if (!liveJobsLoaded && !liveJobsLoading) fetchLiveJobBoards();
+        else renderApplicatorHub();
+      }
+      if (tabId === 'tailoring') {
+        renderTailoringUI();
+      }
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 3. UI State Initialization
+    // =========================================================================
+    function escapeHTML(text) {
+      return String(text ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    function renderCandidateUI() {
+      document.getElementById('profile-name').innerText = activeCandidate.name;
+      document.getElementById('profile-role').innerText = activeCandidate.role;
+      document.getElementById('profile-exp').innerText = `${activeCandidate.experience} Years Exp`;
+      document.getElementById('profile-degree').innerText = activeCandidate.degree;
+      document.getElementById('profile-recent-role').innerText = activeCandidate.recentRole;
+      const subtitle = document.getElementById('profile-subtitle');
+      if (subtitle) subtitle.textContent = resumeUploaded
+        ? `${(activeCandidate.skills||[]).length} skills · ${(activeCandidate.bullets||[]).length} projects · Ready to match jobs and practice interviews.`
+        : 'Demo profile. Upload your resume for personalized matches.';
+      
+      const initials = activeCandidate.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      document.getElementById('profile-avatar').innerText = initials;
+
+      const skillsContainer = document.getElementById('profile-skills-tags');
+      skillsContainer.innerHTML = activeCandidate.skills.map(s => 
+        `<span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-blue-700 border border-slate-200/80">${escapeHTML(s)}</span>`
+      ).join('');
+      document.getElementById('skill-count-badge').innerText = `${activeCandidate.skills.length} Skills`;
+
+      document.getElementById('hub-resume-name').innerText = activeCandidate.email || 'No email in uploaded resume';
+
+      // Update Tab 3 Active Candidate Header Card
+      const tab3Avatar = document.getElementById('tab3-cand-avatar');
+      if (tab3Avatar) tab3Avatar.innerText = initials;
+      const tab3Name = document.getElementById('tab3-cand-name');
+      if (tab3Name) tab3Name.innerText = activeCandidate.name;
+      const tab3Role = document.getElementById('tab3-cand-role');
+      if (tab3Role) tab3Role.innerText = activeCandidate.role;
+      const tab3Exp = document.getElementById('tab3-cand-exp');
+      if (tab3Exp) tab3Exp.innerText = `${activeCandidate.experience} Years Exp`;
+      const tab3ProjCount = document.getElementById('tab3-cand-proj-count');
+      if (tab3ProjCount) tab3ProjCount.innerText = activeCandidate.bullets ? activeCandidate.bullets.length : 0;
+      const tab3SkillCount = document.getElementById('tab3-cand-skill-count');
+      if (tab3SkillCount) tab3SkillCount.innerText = activeCandidate.skills ? activeCandidate.skills.length : 0;
+      const tab3Degree = document.getElementById('tab3-cand-degree');
+      if (tab3Degree) tab3Degree.innerText = activeCandidate.degree;
+
+      // Server generates a question roadmap from the uploaded candidate's resume.
+      resetInterviewClock();
+      interviewQuestions = buildCandidateInterviewQuestions();
+      currentQuestionIndex = 0;
+      renderInterviewRoadmap();
+
+      populateJobDropdowns();
+      runLiveEvaluation();
+      renderTailoringUI();
+      renderApplicatorHub();
+      displayCurrentInterviewQuestion();
+      loadInterviewQuestionsFromBackend();
+      lucide.createIcons();
+    }
+
+    function toggleTab3PasteDrawer() {
+      const drawer = document.getElementById('tab3-paste-drawer');
+      if (drawer) drawer.classList.toggle('hidden');
+    }
+
+    async function handleTab3PasteIngestion() {
+      const textarea = document.getElementById('tab3-paste-textarea');
+      if (!textarea) return;
+      const rawText = textarea.value.trim();
+      if (!rawText || rawText.length < 20) {
+        showToast("⚠️ Please paste your resume text before ingesting.", "warning");
+        return;
+      }
+      try {
+        const result = await apiJSON('/api/resume/parse', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text:rawText,filename:'Pasted_Resume.txt'})
+        });
+        applyExtractedResume(result.candidate);
+        toggleTab3PasteDrawer();
+      } catch(e) {showToast(e.message,'warning');}
+    }
+
+    async function handleModalPasteExtraction() {
+      const textarea = document.getElementById('modal-paste-raw-resume');
+      if (!textarea) return;
+      const rawText = textarea.value.trim();
+      if (!rawText || rawText.length < 20) {
+        showToast("⚠️ Please paste your resume text before extracting.", "warning");
+        return;
+      }
+      try {
+        const result = await apiJSON('/api/resume/parse', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text:rawText,filename:'Pasted_Resume.txt'})
+        });
+        applyExtractedResume(result.candidate);
+      } catch(e) {showToast(e.message,'warning');}
+    }
+
+    function liveJobAsTarget(job) {
+      return {
+        id: job.id, title: job.title, company: job.company, location: job.location,
+        requiredSkills: Array.isArray(job.required_skills) ? job.required_skills : [],
+        minExp: null, posted_at: job.posted_at, age_days: Number(job.age_days || 0),
+        description: cleanJobText(job.description), remote: Boolean(job.remote),
+        url: cleanOfficialUrl(job.url), source: job.source,
+        match_score: Number(job.match_score || 0), matched_skills: job.matched_skills || [], isLive: true
+      };
+    }
+
+    function syncComparisonJobs() {
+      const oldId = targetJobs[currentJobIndex]?.id;
+      targetJobs = [...liveJobs.map(liveJobAsTarget), ...customJobs];
+      currentJobIndex = Math.max(0, targetJobs.findIndex(j => j.id === oldId));
+      tailorJobIndex = currentJobIndex;
+      populateJobDropdowns();
+      runLiveEvaluation();
+      renderTailoringUI();
+    }
+
+    function populateJobDropdowns() {
+      const scoringDropdown = document.getElementById('job-dropdown');
+      const tailorDropdown = document.getElementById('tailor-job-select');
+      const options = targetJobs.map((job, i) => `<option value="${i}">${escapeHTML(job.isLive ? 'LIVE • ' : 'CUSTOM • ')}${escapeHTML(job.title)} — ${escapeHTML(job.company)}</option>`).join('');
+      scoringDropdown.innerHTML = options;
+      tailorDropdown.innerHTML = options || '<option value="">Find a recent job or enter your own job description</option>';
+      if (targetJobs.length) {
+        scoringDropdown.value = String(currentJobIndex);
+        tailorDropdown.value = String(tailorJobIndex);
+      }
+      renderJobUI();
+    }
+
+    function recentJobAge(job) {
+      if (!job.isLive) return 'Custom description • not a live listing';
+      const d = Number(job.age_days);
+      if (!Number.isFinite(d)) return 'Date unavailable';
+      return d < 1 ? `${Math.max(1, Math.round(d*24))}h ago` : `${Math.floor(d)}d ago`;
+    }
+
+    function selectMatchedJob(index) {
+      if (!targetJobs[index]) return;
+      currentJobIndex = index;
+      tailorJobIndex = index;
+      document.getElementById('job-dropdown').value = String(index);
+      document.getElementById('tailor-job-select').value = String(index);
+      renderJobUI();
+      runLiveEvaluation();
+      renderTailoringUI();
+    }
+
+    function renderJobUI() {
+      const list = document.getElementById('recent-match-jobs');
+      const card = document.getElementById('target-job-card');
+      const status = document.getElementById('recent-job-status');
+      const activeJob = targetJobs[currentJobIndex];
+      if (!targetJobs.length) {
+        list.innerHTML = '';
+        card.innerHTML = '<p class="text-slate-700 font-semibold">No job selected</p><p class="text-slate-600 leading-relaxed mt-2">Refresh jobs or paste a job description.</p>';
+        status.innerText = liveJobsLoading ? 'Fetching recent jobs from public sources…' :
+          liveJobError ? `Could not load jobs: ${liveJobError}` :
+          liveJobsLoaded ? 'No verified recent matches. Try 7 or 14 days in Live Jobs Hub.' :
+          resumeUploaded ? 'Looking for recent jobs based on your resume…' : 'Upload your resume to start matching recent jobs.';
+        return;
+      }
+      status.innerText = `${liveJobs.length} recent job(s) from public sources${customJobs.length ? ` • ${customJobs.length} custom description(s)` : ''}. Estimated relevance.`;
+      const shown = targetJobs.slice(0,4).map((job,i)=>({job,i}));
+      if (currentJobIndex >= 4) shown.unshift({job: activeJob, i:currentJobIndex});
+      list.innerHTML = shown.map(({job,i})=>`
+        <button type="button" onclick="selectMatchedJob(${i})" aria-pressed="${i===currentJobIndex}" class="w-full text-left p-3 rounded-xl border transition ${i===currentJobIndex ? 'border-cyan-400 bg-blue-50' : 'border-slate-200 bg-white hover:border-blue-300'}">
+          <div class="flex justify-between items-start gap-2"><div class="min-w-0"><p class="text-[12px] text-slate-900 font-bold leading-snug">${escapeHTML(job.title)}</p><p class="text-[11px] text-blue-700 mt-1">${escapeHTML(job.company)}</p></div><span class="shrink-0 text-[11px] font-bold text-emerald-700">${Number(job.isLive ? job.match_score : calculateAtsScore(activeCandidate,job).scorePct).toFixed(0)}%*</span></div>
+          <p class="text-[10px] text-slate-600 mt-1.5">${escapeHTML(job.location)} · ${escapeHTML(recentJobAge(job))}</p>
+        </button>`).join('');
+      const url = activeJob.isLive && activeJob.url ? `<a href="${escapeHTML(activeJob.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center bg-blue-600 hover:bg-blue-500 text-slate-900 font-bold px-3 py-2 rounded-lg">View original job / apply ↗</a>` : '';
+      const skills = activeJob.requiredSkills.slice(0,10);
+      const matched = skills.filter(x => activeCandidate.skills.some(s => s.toLowerCase() === x.toLowerCase()));
+      card.innerHTML = `
+        <div class="flex justify-between gap-2 items-center"><p class="text-[10px] font-bold text-blue-600 uppercase">${activeJob.isLive ? 'Selected recent listing' : 'Selected custom job description'}</p><p class="text-[10px] text-slate-500">${escapeHTML(recentJobAge(activeJob))}</p></div>
+        <div><h4 class="font-extrabold text-slate-900 text-sm">${escapeHTML(activeJob.title)}</h4><p class="text-blue-700 mt-1">${escapeHTML(activeJob.company)} · ${escapeHTML(activeJob.location)}</p></div>
+        ${skills.length ? `<div><p class="font-semibold text-slate-800 mb-2">Skills mentioned in job</p><div class="flex flex-wrap gap-1.5">${skills.map(sk=>`<span class="px-2 py-1 rounded-md border ${matched.includes(sk)?'border-emerald-200/70 text-emerald-700 bg-emerald-50':'border-slate-200 text-slate-700 bg-white'}">${escapeHTML(sk)}</span>`).join('')}</div></div>` : '<p class="text-amber-700">Job text has no recognizable skills; review the official description.</p>'}
+        <div><p class="font-semibold text-slate-800">Why it may fit</p><p class="text-slate-600 mt-1 leading-relaxed">${matched.length ? 'Your resume mentions: '+escapeHTML(matched.slice(0,5).join(', ')) : 'No exact technical-skill overlap found. Read the full requirements.'}</p></div>
+        ${activeJob.isLive ? `<p class="text-slate-500 text-[10px]">Source: ${escapeHTML(activeJob.source||'public job feed')} · Official posting date: ${escapeHTML(String(activeJob.posted_at||'').slice(0,10))}</p>` : '<p class="text-amber-700 text-[10px]">User-entered description. Not a verified recent opening.</p>'}
+        ${url}`;
+    }
+
+    function onJobChange() {
+      const n = Number(document.getElementById('job-dropdown').value);
+      selectMatchedJob(n);
+    }
+
+    function onTailorJobSelectChange() {
+      const n = Number(document.getElementById('tailor-job-select').value);
+      selectMatchedJob(n);
+    }
+
+    function calculateAtsScore(candidate, job) {
+      if (!job) return {scorePct:0, skillRatio:0, matchedSkills:[], missingSkills:[]};
+      const skills = candidate.skills || [];
+      const required = job.requiredSkills || [];
+      const matchedSkills = required.filter(s => skills.some(c=> c.toLowerCase().trim() === s.toLowerCase().trim()));
+      const missingSkills = required.filter(s => !matchedSkills.includes(s));
+      const skillRatio = required.length ? matchedSkills.length / required.length : 0;
+      // Public backend provides a role + skills overlap heuristic. Never call this an ATS decision.
+      const scorePct = job.isLive ? Math.min(100,Math.max(0,Number(job.match_score)||0)) :
+        Math.min(100,Math.round(skillRatio*100));
+      return {scorePct, skillRatio, matchedSkills, missingSkills};
+    }
+
+    function runLiveEvaluation() {
+      const job = targetJobs[currentJobIndex];
+      const display = document.getElementById('score-display');
+      const progress = document.getElementById('score-progress-bar');
+      if (!job) {
+        display.innerText = '—';
+        document.getElementById('score-unit').classList.add('hidden');
+        progress.style.width = '0%';
+        document.getElementById('score-badge').innerText = 'Awaiting job';
+        document.getElementById('score-threshold-text').innerText = 'Select a recent job to compare.';
+        document.getElementById('score-context').innerText = 'Heuristic only; not an employer decision.';
+        renderShapDrivers(null);
+        return;
+      }
+      document.getElementById('score-unit').classList.remove('hidden');
+      const result = calculateAtsScore(activeCandidate,job);
+      display.innerText = result.scorePct.toFixed(0);
+      progress.style.width = `${result.scorePct}%`;
+      updateScoreBadges(result.scorePct,result);
+      renderShapDrivers(result);
+    }
+
+    function updateScoreBadges(scorePct,result) {
+      const badge = document.getElementById('score-badge');
+      badge.innerText = scorePct >= 70 ? 'Good overlap' : scorePct >= 40 ? 'Partial overlap' : 'Limited overlap';
+      badge.className = `px-2.5 py-1 rounded-full text-[10px] font-bold ${scorePct >= 70 ? 'bg-emerald-50 text-emerald-700' : scorePct >= 40 ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'}`;
+      document.getElementById('score-progress-bar').className = `h-full rounded-full transition-all duration-300 ${scorePct >= 70 ? 'bg-emerald-500' : scorePct >= 40 ? 'bg-amber-500' : 'bg-rose-500'}`;
+      document.getElementById('score-threshold-text').innerText = `${Math.round(result.skillRatio*100)}% of recognized job skills found in your resume`;
+      document.getElementById('score-context').innerText = 'Estimated relevance, not hiring probability.';
+    }
+
+    function triggerRecalculateWithAnimation() {
+      if (!targetJobs[currentJobIndex]) { showToast('Find a recent job or add a custom job description first.','info'); return; }
+      runLiveEvaluation();
+      showToast('Resume–job comparison updated.', 'success');
+    }
+
+    function renderShapDrivers(result) {
+      const pos = document.getElementById('positive-drivers-list');
+      const neg = document.getElementById('negative-drivers-list');
+      const job = targetJobs[currentJobIndex];
+      if (!result || !job) {
+        pos.innerHTML='<p class="p-3 text-xs text-slate-600">Select a job to see matching skills.</p>';
+        neg.innerHTML='<p class="p-3 text-xs text-slate-600">Choose a job to see missing skills.</p>';
+        return;
+      }
+      pos.innerHTML = result.matchedSkills.length ? `
+        <div class="p-3 rounded-xl border border-emerald-200/40 bg-white"><p class="text-xs font-bold text-slate-900 mb-1">Confirmed skills found in resume</p><p class="text-xs text-emerald-700 leading-relaxed">${escapeHTML(result.matchedSkills.slice(0,12).join(', '))}</p></div>` :
+        '<p class="text-xs text-slate-600 p-3">No exact skills overlap detected. Compare the full job description manually.</p>';
+      if (result.matchedSkills.length) pos.innerHTML += `<p class="text-xs text-slate-600 px-2">Skills appearing in both resume and job.</p>`;
+      neg.innerHTML = result.missingSkills.length ? `<div class="p-3 rounded-xl border border-rose-200/40 bg-white"><p class="text-xs font-bold text-slate-900 mb-1">Keywords not found in your extracted skills</p><p class="text-xs text-rose-700 leading-relaxed">${escapeHTML(result.missingSkills.slice(0,12).join(', '))}</p></div>` :
+        '<p class="text-xs text-emerald-700 p-3">No missing skills among those automatically recognized.</p>';
+      neg.innerHTML += '<p class="text-xs text-slate-600 px-2">Only list skills you genuinely have.</p>';
+    }
+
+    // =========================================================================
+    // 5. Dynamic Resume Tailor (STAR Synthesis & JD Alignment)
+    // =========================================================================
+    function polishVerifiedBullet(original) {
+      // Styling-only rewrite: never add a new tool, metric, date, responsibility or result.
+      return String(original || '').replace(/\s+/g,' ').trim()
+        .replace(/Tech\s*Stack(?=[A-Za-z])/gi,'Tech Stack: ')
+        .replace(/,([A-Za-z])/g,', $1')
+        .replace(/\bDeveloped a\b/gi,'Built a')
+        .replace(/\bImplemented a\b/gi,'Developed a');
+    }
+
+    function matchedWordsIn(text, job) {
+      return (job.requiredSkills || []).filter(skill =>
+        (activeCandidate.skills||[]).some(s => s.toLowerCase() === skill.toLowerCase()) &&
+        text.toLowerCase().includes(skill.toLowerCase()));
+    }
+
+    function safeHighlight(text, skills) {
+      // Escape user input first; highlight only literal substrings from verified skill names.
+      const parts = String(text||'').split(new RegExp(`(${skills.filter(Boolean).map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|') || '(?!)'})`, 'gi'));
+      return parts.map(part => skills.some(s => s.toLowerCase() === part.toLowerCase()) ?
+        `<mark class="rounded bg-blue-50 text-blue-700 px-0.5">${escapeHTML(part)}</mark>` : escapeHTML(part)).join('');
+    }
+
+    function renderTailoringUI() {
+      const container = document.getElementById('tailored-bullets-container');
+      const preview = document.getElementById('tailored-resume-preview');
+      const job = targetJobs[tailorJobIndex];
+      if (!job) {
+        document.getElementById('tailor-target-company').innerText = 'a recent job you choose';
+        document.getElementById('tailor-boost-badge').innerText = 'Only resume-verified details';
+        container.innerHTML = '<p class="p-4 bg-white rounded-xl text-xs text-slate-600">Upload a resume and choose a recent job from ATS Match & Analysis, or enter a custom job description.</p>';
+        preview.innerHTML = '<p class="p-4 bg-white rounded-xl text-xs text-slate-600">Choose a job to preview tailored notes.</p>';
+        document.getElementById('tailored-resume-full-text').innerText = '';
+        return;
+      }
+      document.getElementById('tailor-target-company').innerText = `${job.title} • ${job.company}`;
+      document.getElementById('tailor-boost-badge').innerText = 'No invented metrics or skills';
+      const raw = Array.isArray(activeCandidate.bullets) ? activeCandidate.bullets.filter(Boolean) : [];
+      const verifiedSkills = (job.requiredSkills||[]).filter(s=> (activeCandidate.skills||[]).some(a=>a.toLowerCase()===s.toLowerCase()));
+      const items = raw.map(original=>({original:String(original), revised:polishVerifiedBullet(original)}));
+      container.innerHTML = items.length ? items.map(({original,revised},i)=>{
+        const skills=matchedWordsIn(revised,job);
+        return `<article class="p-3.5 bg-white border border-slate-200 rounded-xl space-y-3">
+          <h4 class="text-xs font-bold text-slate-900">Project / Experience ${i+1}</h4>
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-3">
+            <div class="p-3 border border-slate-200 rounded-xl bg-slate-50"><p class="text-[11px] text-rose-700 font-bold mb-2">Original Bullet</p><p class="text-xs text-slate-700 leading-relaxed break-words">${escapeHTML(original)}</p></div>
+            <div class="p-3 border border-emerald-200/50 rounded-xl bg-emerald-50"><p class="text-[11px] text-emerald-700 font-bold mb-2">Improved Bullet</p><p class="text-xs text-slate-800 leading-relaxed break-words">${safeHighlight(revised,skills)}</p></div>
+          </div>
+          <div class="flex items-center justify-between flex-wrap gap-2"><p class="text-[11px] text-slate-600">Matching keywords: <span class="text-blue-700">${escapeHTML(skills.join(', ')||'None found')}</span></p><button onclick="copyVerifiedBullet(${i})" class="bg-slate-100 border border-slate-200 hover:border-blue-300 rounded-lg px-3 py-1.5 text-[11px] text-blue-700 font-semibold">Copy Bullet</button></div>
+        </article>`;
+      }).join('') : '<p class="text-xs text-slate-600">No project bullet found. Add your own verified project details in your resume.</p>';
+      const name=activeCandidate.name || 'Candidate';
+      const role=activeCandidate.role || 'Candidate';
+      const degree=activeCandidate.degree || 'Not specified';
+      const allSkills=Array.isArray(activeCandidate.skills)?activeCandidate.skills:[];
+      const matchedMarkup=verifiedSkills.length ? verifiedSkills.map(s=>`<span class="rounded-lg bg-blue-50 border border-blue-200/60 px-2 py-1 text-[11px] text-blue-700">${escapeHTML(s)}</span>`).join('') : '<p class="text-xs text-slate-600">No identical job-skill keywords detected.</p>';
+      preview.innerHTML = `
+        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-1"><p class="text-lg font-bold text-slate-900">${escapeHTML(name)}</p><p class="text-xs text-blue-700">${escapeHTML(role)}</p>${activeCandidate.email ? `<p class="text-xs text-slate-600 break-all">${escapeHTML(activeCandidate.email)}</p>` : ''}</div>
+        <div class="space-y-2"><h4 class="text-xs font-extrabold text-slate-900">Professional Summary</h4><p class="rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-700 leading-relaxed">${escapeHTML(role)} candidate with education in ${escapeHTML(degree)}. Resume lists ${allSkills.length} skills and ${items.length} project or experience entries. Review and personalize this summary before using it.</p></div>
+        <div class="space-y-2"><h4 class="text-xs font-extrabold text-slate-900">Relevant Skills</h4><div class="flex flex-wrap gap-1.5">${matchedMarkup}</div><p class="text-[11px] text-slate-500">No new skills are added automatically.</p></div>
+        <div class="space-y-2"><h4 class="text-xs font-extrabold text-slate-900">Project Notes</h4><div class="rounded-xl border border-slate-200 bg-white p-3 space-y-2">${items.length?items.map(({revised},i)=>`<p class="text-xs text-slate-700 leading-relaxed break-words">${i+1}. ${escapeHTML(revised)}</p>`).join(''):'<p class="text-xs text-slate-500">Add verified projects from your resume.</p>'}</div></div>
+        <div class="space-y-2"><h4 class="text-xs font-extrabold text-slate-900">Before Applying</h4><p class="text-xs text-slate-600 rounded-xl border border-amber-200/50 bg-amber-50 p-3">Check the job requirements. Do not claim missing skills or made-up results. Downloaded notes are not a submitted resume.</p></div>`;
+      const fullText = [
+        name, `${role}`,activeCandidate.email||'', `Target Job: ${job.title} at ${job.company}`,
+        '', 'EDUCATION', degree, '', 'SKILLS VERIFIED IN YOUR RESUME', allSkills.join(', '),
+        '', 'JOB-RELEVANT SKILLS FOUND IN YOUR RESUME', verifiedSkills.join(', ')||'None detected',
+        '', 'ORIGINAL PROJECT / EXPERIENCE NOTES (GRAMMAR AND FORMATTING ONLY)',
+        ...items.map(({revised},i)=>`${i+1}. ${revised}`),
+        '', 'Review each statement. Add no unverified experience, tools, dates or metrics.',
+        'These are notes, not a final resume or an employer ATS prediction.'
+      ].join('\n');
+      document.getElementById('tailored-resume-full-text').innerText=fullText;
+      lucide.createIcons();
+    }
+
+    function copyVerifiedBullet(index) {
+      const bullet=activeCandidate.bullets?.[index];
+      if (!bullet) return;
+      navigator.clipboard.writeText(polishVerifiedBullet(bullet)).then(()=>showToast('Bullet copied.', 'success'))
+        .catch(()=>showToast('Clipboard unavailable; use Copy notes.', 'warning'));
+    }
+
+    function triggerTailoringAction() {
+      if (!targetJobs[tailorJobIndex]) {showToast('Select a job first.','info');return;}
+      renderTailoringUI();
+      showToast('Verified resume notes prepared. Please review before applying.', 'success');
+    }
+
+    function copyTailoredResume() {
+      const text = document.getElementById('tailored-resume-full-text').innerText;
+      if (!text) {showToast('Choose a job first.','info');return;}
+      navigator.clipboard.writeText(text).then(()=>showToast('Resume notes copied.','success'))
+        .catch(()=>showToast('Could not access clipboard. Use download instead.','warning'));
+    }
+
+    function downloadTailoredResume() {
+      const text = document.getElementById('tailored-resume-full-text').innerText;
+      const job = targetJobs[tailorJobIndex];
+      if (!job || !text) {showToast('Choose a job first.','info');return;}
+      const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+      const link=document.createElement('a');
+      link.href=URL.createObjectURL(blob);
+      link.download=`CareerPilot_${(job.company||'Job').replace(/[^a-z0-9_-]/gi,'_')}_Resume_Notes.txt`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast('Resume notes downloaded. Verify before using.','success');
+    }
+
+    function applyWithTailoredResumeFromTailorTab() {
+      const job=targetJobs[tailorJobIndex];
+      if (job?.isLive && job.url) {window.open(job.url,'_blank','noopener,noreferrer');return;}
+      switchTab('applicator');
+      showToast('Choose a real job to open its application page. Nothing is submitted automatically.','info');
+    }
+
+    let currentHrFollowUp = null;
+
+    function startOrResumeInterviewTimer() {
+      if (timerInterval || !interviewRunning) return;
+      timerInterval = setInterval(() => {
+        interviewSecondsElapsed++;
+        const mins = String(Math.floor(interviewSecondsElapsed / 60)).padStart(2, '0');
+        const secs = String(interviewSecondsElapsed % 60).padStart(2, '0');
+        document.getElementById('interview-timer-display').innerText = `${mins}:${secs} / 45:00 target`;
+        if (interviewSecondsElapsed === 45*60) showToast('45-minute target reached. You may finish or continue to 50 minutes.', 'info');
+        if (interviewSecondsElapsed >= 50*60) finishInterview();
+      }, 1000);
+    }
+
+    function restartInterviewSession() {
+      resetInterviewClock();
+      interviewCompleted = false;
+      interviewResponses = [];
+      currentQuestionIndex = 0;
+      isQuestionAnswered = false;
+      currentHrFollowUp = null;
+      displayCurrentInterviewQuestion();
+      showToast('Session reset. Click Start Interview when ready.', 'info');
+    }
+
+
+        function renderInterviewRoadmap() {
+      const container = document.getElementById('questions-roadmap-container');
+      if (!container) return;
+
+      container.innerHTML = interviewQuestions.map((q, idx) => {
+        const isCurrent = idx === currentQuestionIndex;
+        return `
+          <button onclick="jumpToQuestion(${idx})" class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition cursor-pointer ${isCurrent ? 'bg-blue-600 text-slate-900 shadow-md shadow-blue-100/30' : 'bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200/60'}">
+            Q${idx + 1}
+          </button>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function jumpToQuestion(index) {
+      if (interviewCompleted || index < 0 || index >= interviewQuestions.length) return;
+      currentQuestionIndex = index;
+      displayCurrentInterviewQuestion();
+      speakCurrentQuestion();
+    }
+
+    function displayCurrentInterviewQuestion() {
+      if (!interviewQuestions || interviewQuestions.length === 0) return;
+      const q = interviewQuestions[currentQuestionIndex];
+      isQuestionAnswered = false;
+      currentHrFollowUp = null;
+
+      document.getElementById('current-stage-title').innerText = q.stageTitle;
+      document.getElementById('interview-qstage-tag').innerText = q.stage;
+      document.getElementById('interview-question-category').innerText = q.category;
+      document.getElementById('voice-question-text').innerText = `"${q.question}"`;
+      document.getElementById('voice-answer-textarea').value = "";
+      document.getElementById('voice-status-indicator').innerText = "Ready for your answer";
+      document.getElementById('voice-status-indicator').className = "text-[11px] text-slate-500 font-mono";
+
+      // Hide and reset HR follow-up panel
+      const hrPanel = document.getElementById('hr-followup-panel');
+      if (hrPanel) hrPanel.classList.add('hidden');
+      const hrText = document.getElementById('hr-followup-textarea');
+      if (hrText) hrText.value = "";
+
+      // Reset rubric scorecard
+      document.getElementById('rubric-verdict-pill').innerText = "AWAITING ANSWER";
+      document.getElementById('rubric-verdict-pill').className = "px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 text-slate-600 border border-slate-200 font-mono";
+      document.getElementById('score-acc').innerText = "- / 5";
+      document.getElementById('score-depth').innerText = "- / 5";
+      document.getElementById('score-comm').innerText = "- / 5";
+      document.getElementById('bar-acc').style.width = "0%";
+      document.getElementById('bar-depth').style.width = "0%";
+      document.getElementById('bar-comm').style.width = "0%";
+      document.getElementById('rubric-feedback').innerText = "Provide your answer and click 'Submit Answer' for honest rubric scoring.";
+
+      // Lock Model Answer
+      document.getElementById('model-answer-locked').classList.remove('hidden');
+      document.getElementById('model-answer-unlocked').classList.add('hidden');
+      document.getElementById('rubric-model-answer').innerText = q.model_answer;
+
+      // Update Next Button Label
+      document.getElementById('next-qnum-btn').innerText = Math.min(currentQuestionIndex + 2, interviewQuestions.length);
+      const totalBtn = document.getElementById('total-qnum-btn');
+      if (totalBtn) totalBtn.innerText = interviewQuestions.length;
+
+      renderInterviewRoadmap();
+    }
+
+    function speakCurrentQuestion() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const q = interviewQuestions[currentQuestionIndex];
+        if (!q) return;
+        const utterance = new SpeechSynthesisUtterance(q.question);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function nextInterviewQuestion() {
+      if (interviewCompleted) return;
+      if (currentQuestionIndex < interviewQuestions.length - 1) {
+        currentQuestionIndex++;
+        displayCurrentInterviewQuestion();
+        speakCurrentQuestion();
+        showToast(`Proceeded to Question ${currentQuestionIndex + 1} of ${interviewQuestions.length}`, 'info');
+      } else {
+        finishInterview();
+      }
+    }
+
+    // The backend generates the HR follow-up from the candidate's actual answer.
+
+    function speakFollowUpQuestion() {
+      if ('speechSynthesis' in window && currentHrFollowUp) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(currentHrFollowUp.interviewerSay);
+        utterance.rate = 0.95;
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+
+        async function submitFollowUpAnswer() {
+      const text = document.getElementById('hr-followup-textarea').value.trim();
+      if (!text) {showToast('Please answer the follow-up or choose Next Question.','warning');return;}
+      if (submittingAnswer) return;
+      submittingAnswer = true;
+      try {
+        const q = interviewQuestions[currentQuestionIndex];
+        const result = await apiJSON('/api/interview/feedback', {
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({candidate:activeCandidate,question:q,answer:text,is_follow_up:true})
+        });
+        interviewResponses.push({question:q.question, answer:text,follow_up:true,feedback:result.feedback});
+        document.getElementById('rubric-feedback').innerText += ' Follow-up: ' + result.feedback;
+        document.getElementById('hr-followup-panel').classList.add('hidden');
+        showToast('Follow-up answer recorded. Moving to the next question.','success');
+        nextInterviewQuestion();
+      } catch(error) {showToast(error.message,'warning');}
+      finally {submittingAnswer=false;}
+    }
+
+    async function evaluateInterviewAnswer() {
+      const answer = document.getElementById('voice-answer-textarea').value.trim();
+      if (!answer) {showToast('Please speak or type your answer.','warning');return;}
+      if (submittingAnswer) return;
+      if (isQuestionAnswered) {showToast('Already submitted. Answer the follow-up or move to Next.','info');return;}
+      const question = interviewQuestions[currentQuestionIndex];
+      submittingAnswer = true;
+      try {
+        if (!interviewRunning && !interviewCompleted) {
+          interviewRunning = true;
+          document.getElementById('btn-start-interview').innerText = 'Pause Interview';
+          startOrResumeInterviewTimer();
+        }
+        const result = await apiJSON('/api/interview/feedback', {
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({candidate:activeCandidate,question,answer,is_follow_up:false})
+        });
+        if (interviewQuestions[currentQuestionIndex] !== question) return;
+        const scores = result.scores || {};
+        for (const [key,id,bar] of [['accuracy','score-acc','bar-acc'],['depth','score-depth','bar-depth'],['communication','score-comm','bar-comm']]) {
+          const value = Math.max(0, Math.min(5, Number(scores[key]||0)));
+          document.getElementById(id).innerText = `${value} / 5`;
+          document.getElementById(bar).style.width = `${value*20}%`;
+        }
+        document.getElementById('rubric-verdict-pill').innerText = result.assessment_mode === 'groq_llm' ? 'AI COACHING FEEDBACK' : 'PRACTICE FEEDBACK';
+        document.getElementById('rubric-feedback').innerText = result.feedback + ' ' + (result.assessment_note||'');
+        document.getElementById('model-answer-locked').classList.add('hidden');
+        document.getElementById('model-answer-unlocked').classList.remove('hidden');
+        interviewResponses.push({question:question.question,answer,follow_up:false,feedback:result.feedback});
+        isQuestionAnswered=true;
+        if (result.follow_up) {
+          currentHrFollowUp = {interviewerSay:result.follow_up};
+          document.getElementById('hr-followup-panel').classList.remove('hidden');
+          document.getElementById('hr-followup-text').innerText = result.follow_up;
+          document.getElementById('hr-followup-textarea').value = '';
+          speakFollowUpQuestion();
+        }
+      } catch(error) {showToast('Unable to evaluate: '+error.message,'warning');}
+      finally {submittingAnswer=false;}
+    }
+
+
+        function toggleMicrophone() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("Speech recognition is supported natively in Google Chrome & Edge. Please type your answer directly in the box.");
+        return;
+      }
+
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (isRecording) {
+        if (speechRecognitionInstance) speechRecognitionInstance.stop();
+        isRecording = false;
+        document.getElementById('voice-mic-label').innerText = "Use Microphone";
+        document.getElementById('voice-status-indicator').innerText = "Microphone stopped.";
+        return;
+      }
+
+      speechRecognitionInstance = new SpeechRec();
+      speechRecognitionInstance.continuous = true;
+      speechRecognitionInstance.interimResults = true;
+      speechRecognitionInstance.lang = 'en-US';
+
+      speechRecognitionInstance.onstart = () => {
+        isRecording = true;
+        document.getElementById('voice-mic-label').innerText = "🔴 Listening... (Click to Stop)";
+        document.getElementById('voice-status-indicator').innerText = "Recording your voice...";
+        document.getElementById('voice-status-indicator').className = "text-[11px] text-blue-600 font-mono animate-pulse";
+      };
+
+      const transcriptPrefix = document.getElementById('voice-answer-textarea').value.trim();
+      speechRecognitionInstance.onresult = (e) => {
+        let transcript = "";
+        for (let i = 0; i < e.results.length; i++) {
+          transcript += e.results[i][0].transcript + " ";
+        }
+        document.getElementById('voice-answer-textarea').value = [transcriptPrefix,transcript.trim()].filter(Boolean).join(' ');
+        document.getElementById('voice-status-indicator').innerText = "Speech captured!";
+        document.getElementById('voice-status-indicator').className = "text-[11px] text-emerald-600 font-mono";
+      };
+
+      speechRecognitionInstance.onerror = () => {
+        isRecording = false;
+        document.getElementById('voice-mic-label').innerText = "Use Microphone";
+        document.getElementById('voice-status-indicator').innerText = "Microphone idle.";
+      };
+
+      speechRecognitionInstance.onend = () => {
+        isRecording = false;
+        document.getElementById('voice-mic-label').innerText = "Use Microphone";
+      };
+
+      speechRecognitionInstance.start();
+    }
+
+    // =========================================================================
+    // 7. Live Jobs Hub & Search
+    // =========================================================================
+    function syncRecentDaysFilter(value) {
+      document.getElementById('live-days').value = String(value);
+      fetchLiveJobBoards();
+    }
+
+    async function fetchLiveJobBoards() {
+      if (!resumeUploaded) {
+        showToast('Upload a resume to find matching jobs.', 'info');
+        return;
+      }
+      if (liveJobsLoading) return;
+      document.getElementById('scoring-days').value = document.getElementById('live-days').value;
+      const btn = document.getElementById('btn-fetch-live');
+      const label = document.getElementById('fetch-live-label');
+      const status = document.getElementById('live-source-status');
+      const requestNumber = ++liveRefreshSequence;
+      const profileVersion = liveProfileVersion;
+      liveJobsLoading = true;
+      liveJobError = '';
+      btn.disabled = true;
+      label.innerText = 'Loading jobs...';
+      status.innerText = 'Searching recent openings...';
+      try {
+        const result = await apiJSON('/api/jobs/recent', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            candidate:{role:activeCandidate.role, skills:activeCandidate.skills, experience:activeCandidate.experience},
+            days:Number(document.getElementById('live-days').value),
+            location:document.getElementById('live-location').value
+          })
+        });
+        if (requestNumber !== liveRefreshSequence || profileVersion !== liveProfileVersion) return;
+        liveJobs = Array.isArray(result.jobs) ? result.jobs : [];
+        liveJobsLoaded = true;
+        const sources = (result.sources_ok || []).join(', ') || 'none';
+        const failed = (result.source_errors || []).length;
+        status.innerText = `${liveJobs.length} jobs · Last ${result.days} days${failed ? ' · Some feeds unavailable' : ''}`;
+        const meta = document.getElementById('live-job-meta');
+        if (meta) meta.textContent = `Sources: ${sources}. Updated ${new Date(result.fetched_at).toLocaleString()}.`;
+        if (!liveJobs.length) showToast('No matching jobs with verified posting dates. Try 7–14 days or all locations.','info');
+      } catch (err) {
+        if (profileVersion !== liveProfileVersion) return;
+        liveJobs = [];
+        liveJobsLoaded = true;
+        liveJobError = err.message;
+        status.innerText = 'Could not load real jobs: ' + err.message + '. No sample listings have been substituted.';
+        showToast('Real job feed unavailable: '+err.message, 'warning');
+      } finally {
+        btn.disabled = false;
+        label.innerText = 'Refresh Jobs';
+        liveJobsLoading = false;
+        renderApplicatorHub();
+        if (profileVersion === liveProfileVersion) syncComparisonJobs();
+        if (profileVersion !== liveProfileVersion && resumeUploaded) {
+          fetchLiveJobBoards(); // new resume uploaded during a previous request
+        }
+      }
+    }
+
+    function onJobSearchInput(event) {
+      searchQuery = (event.target.value || '').toLowerCase().trim();
+      renderApplicatorHub();
+    }
+
+    function filterJobs(filterKey) {
+      currentJobFilter = filterKey;
+      ['all', 'ai_ml', 'data_science', 'analytics', 'fresh', 'applied'].forEach(k => {
+        const btn = document.getElementById(`filter-btn-${k}`);
+        if (!btn) return;
+        btn.className = k === filterKey ? 'app-filter app-filter-active' : 'app-filter';
+      });
+      renderApplicatorHub();
+    }
+
+    function jobDomain(job) {
+      const title = (job.title || '').toLowerCase();
+      if (/analytics|analyst|business intelligence|power bi|tableau/.test(title)) return 'analytics';
+      if (/scientist|data science|data engineer/.test(title)) return 'data_science';
+      if (/ai|machine learning|ml engineer|nlp|llm|genai|deep learning/.test(title)) return 'ai_ml';
+      return 'other';
+    }
+
+    function cleanOfficialUrl(url) {
+      try {
+        const parsed = new URL(url);
+        return parsed.protocol === 'https:' ? parsed.href : null;
+      } catch (_) { return null; }
+    }
+
+    // Job sources may send encoded HTML, HTML lists, or already-clean plain text.
+    // Convert to readable TEXT only. Never interpolate provider markup as live HTML.
+    function cleanJobText(value) {
+      let result = String(value || '').slice(0, 7000);
+      const entities = {amp:'&', lt:'<', gt:'>', quot:'"', apos:"'", nbsp:' '};
+      for (let i = 0; i < 3; i++) {
+        const decoded = result.replace(/&(?:amp|lt|gt|quot|apos|nbsp|#(?:x[0-9a-f]+|[0-9]+));/gi, match => {
+          const entity = match.slice(1, -1).toLowerCase();
+          if (entity in entities) return entities[entity];
+          const codepoint = entity.startsWith('#x') ? parseInt(entity.slice(2),16) : parseInt(entity.slice(1),10);
+          return Number.isInteger(codepoint) && codepoint > 0 && codepoint <= 0x10ffff
+            ? String.fromCodePoint(codepoint) : ' ';
+        });
+        if (decoded === result) break;
+        result = decoded;
+      }
+      result = result.replace(/<(?:script|style|noscript|svg|iframe)\b[^>]*>[\s\S]*?<\/(?:script|style|noscript|svg|iframe)\s*>/gi, ' ')
+        .replace(/<br\s*\/?\s*>/gi, '\n')
+        .replace(/<li\b[^>]*>/gi, '\n• ')
+        .replace(/<\/?(?:h[1-6]|p|div|ul|ol|li|section|article|blockquote|tr|table)\b[^>]*>/gi, '\n')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\r/g, '\n')
+        .replace(/[ \t]+/g, ' ')
+        .replace(/\n[ \t]*/g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+      return result;
+    }
+
+    function jobPreview(description) {
+      const lines = description.split(/\n+/).map(line => line.trim()).filter(Boolean);
+      const withoutHeading = lines.filter(line => !/^(?:about (?:us|the company)|who\/?what is\b|what is\b|our company|job description|overview|about the role|what we do)\b/i.test(line));
+      const body = (withoutHeading.length ? withoutHeading : lines).join(' ').replace(/\s+/g, ' ').trim();
+      if (!body) return 'Open the official job listing for the complete role description.';
+      if (body.length <= 190) return body;
+      const slice = body.slice(0, 190);
+      const lastSpace = slice.lastIndexOf(' ');
+      return slice.slice(0, lastSpace > 125 ? lastSpace : 190).trimEnd() + '…';
+    }
+
+    function renderApplicatorHub() {
+      const container = document.getElementById('company-cards-container');
+      if (!container) return;
+      const appliedCount = liveJobs.filter(j => liveAppliedIds.has(j.id)).length;
+      document.getElementById('applied-nav-badge').innerText = appliedCount;
+      document.getElementById('total-jobs-badge').innerText = liveJobs.length;
+      document.getElementById('stat-total-jobs').innerText = liveJobs.length;
+      document.getElementById('stat-applied-count').innerText = appliedCount;
+      document.getElementById('stat-ready-count').innerText = liveJobs.length - appliedCount;
+      const counts = {
+        all:liveJobs.length,
+        ai_ml:liveJobs.filter(j=>jobDomain(j)==='ai_ml').length,
+        data_science:liveJobs.filter(j=>jobDomain(j)==='data_science').length,
+        analytics:liveJobs.filter(j=>jobDomain(j)==='analytics').length,
+        fresh:liveJobs.filter(j=>j.age_days <= 2).length,
+        applied:appliedCount
+      };
+      Object.entries(counts).forEach(([name,value]) => {
+        const el = document.getElementById('count-'+name);
+        if (el) el.innerText = value;
+      });
+      if (!liveJobsLoaded) {
+        container.innerHTML = '<div class="col-span-2 text-center text-slate-600 p-8 border border-slate-200 rounded-2xl">Open Live Jobs Hub or press Refresh Jobs to fetch actual jobs from public job feeds.</div>';
+        return;
+      }
+      const filtered = liveJobs.filter(job => {
+        if (['ai_ml','data_science','analytics'].includes(currentJobFilter) && jobDomain(job) !== currentJobFilter) return false;
+        if (currentJobFilter === 'fresh' && job.age_days > 2) return false;
+        if (currentJobFilter === 'applied' && !liveAppliedIds.has(job.id)) return false;
+        const searchable = [job.title,job.company,job.location,...(job.required_skills || [])].join(' ').toLowerCase();
+        return !searchQuery || searchable.includes(searchQuery);
+      });
+      if (!filtered.length) {
+        container.innerHTML = `<div class="col-span-2 text-center text-slate-600 p-8 border border-slate-200 rounded-2xl">${liveJobError ? 'Live job feeds unavailable. Retry later.' : 'No matching recent listings for this filter. You can try 7/14/30 days, All locations, or change your search. No demo jobs are substituted.'}</div>`;
+        return;
+      }
+      container.innerHTML = filtered.map(job => {
+        const applied = liveAppliedIds.has(job.id);
+        const url = cleanOfficialUrl(job.url);
+        const daysOld = Number(job.age_days || 0);
+        const age = daysOld < 1 ? `${Math.max(1, Math.round(daysOld * 24))} hours ago` : `${Math.floor(daysOld)} day(s) ago`;
+        const email = job.email_to_apply || '';
+        const desc = cleanJobText(job.description);
+        const preview = jobPreview(desc);
+        const initials = String(job.company || 'Job').trim().split(/\s+/).slice(0,2).map(word => word.charAt(0).toUpperCase()).join('');
+        const match = Math.max(0, Math.min(100, Number(job.match_score || 0)));
+        const appliedBadge = applied ? '<span class="text-[10px] font-bold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/50">Applied (self-reported)</span>' : '';
+        const source = String(job.source || 'Job board');
+        return `
+          <article class="glass-card rounded-2xl p-4 border border-slate-200/80 hover:border-blue-300/30 space-y-4 transition-colors">
+            <div class="flex items-start gap-3">
+              <div class="h-11 w-11 rounded-xl shrink-0 bg-gradient-to-br from-blue-600 to-indigo-600/25 border border-blue-300/20 flex items-center justify-center text-blue-700 text-sm font-extrabold">${escapeHTML(initials)}</div>
+              <div class="min-w-0 flex-1">
+                <h3 class="font-extrabold text-slate-900 text-base leading-snug">${escapeHTML(job.title)}</h3>
+                <p class="text-xs font-semibold text-blue-700 mt-1">${escapeHTML(job.company)}</p>
+                <p class="text-xs text-slate-600 mt-1 flex items-center gap-1"><span aria-hidden="true">◉</span> ${escapeHTML(job.location)}</p>
+              </div>
+              <span class="text-[10px] px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 text-center font-bold shrink-0">${Math.round(match)}% match*</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-600">
+              <span class="px-2 py-1 bg-slate-100/70 border border-slate-200 rounded-md">${escapeHTML(age)}</span>
+              <span class="px-2 py-1 bg-slate-100/70 border border-slate-200 rounded-md">${escapeHTML(source)}</span>
+              ${job.remote ? '<span class="px-2 py-1 bg-indigo-50 border border-indigo-200/70 text-indigo-700 rounded-md">Remote listed</span>' : ''}
+              ${appliedBadge}
+            </div>
+            <div class="rounded-xl bg-white border border-slate-200 p-3.5">
+              <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Overview</p>
+              <p class="text-xs text-slate-800 leading-6">${escapeHTML(preview)}</p>
+              ${desc ? `<details class="mt-3 border-t border-slate-200 pt-3 group">
+                  <summary class="text-blue-600 hover:text-blue-700 text-xs font-semibold cursor-pointer select-none">Full job details</summary>
+                  <div class="mt-3 max-h-80 overflow-y-auto rounded-lg bg-slate-50 border border-slate-200 p-3.5 text-xs text-slate-700 whitespace-pre-line leading-6">${escapeHTML(desc)}</div>
+
+                </details>` : ''}
+            </div>
+            ${(job.matched_skills || []).length ? `<div>
+              <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Matching skills</p>
+              <div class="flex flex-wrap gap-1.5">${job.matched_skills.slice(0,8).map(skill => `<span class="text-[11px] font-medium border border-emerald-200/70 bg-emerald-50 text-emerald-700 rounded-lg px-2.5 py-1">${escapeHTML(skill)}</span>`).join('')}</div>
+            </div>` : ''}
+            <div class="flex flex-wrap items-center gap-2 border-t border-slate-200 pt-3">
+              ${url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-900 font-bold text-xs">${source.startsWith('Lever/') || source.startsWith('Greenhouse/') ? 'Apply on Company Site ↗' : 'View Job / Apply ↗'}</a>` : ''}
+              ${email ? `<button onclick="draftApplicationEmail('${escapeHTML(job.id)}')" class="px-3 py-2.5 rounded-xl bg-slate-100 text-blue-700 border border-slate-200 text-xs font-semibold hover:border-blue-300">Email Draft</button>` : ''}
+              <button onclick="markApplication('${escapeHTML(job.id)}')" class="px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-700 hover:border-slate-500">${applied ? 'Undo Applied' : 'Mark Applied'}</button>
+            </div>
+            <p class="text-[10px] text-slate-500">Posted ${escapeHTML(String(job.posted_at || '').slice(0,10))} · Relevance estimate only</p>
+          </article>`;
+      }).join('');
+    }
+
+    function draftApplicationEmail(id) {
+      const job = liveJobs.find(j => j.id === id);
+      if (!job || !job.email_to_apply || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(job.email_to_apply)) return;
+      const fromEmail = activeCandidate.email || '';
+      const subject = `Application for ${job.title} – ${activeCandidate.name}`;
+      const message = `Hello Hiring Team,\n\nI am interested in the ${job.title} position at ${job.company}. My background includes ${activeCandidate.skills.slice(0,5).join(', ')}. I would appreciate your consideration.\n\nPlease find my resume attached.\n\nRegards,\n${activeCandidate.name}\n${fromEmail}`;
+      const ok = confirm(`This will OPEN your email app (it will not send).\nRecipient listed in job: ${job.email_to_apply}\nUse your own signed-in account${fromEmail ? ' (' + fromEmail + ')' : ''}.\nYou MUST attach the real resume yourself and click Send. Verify the recipient before sending. Continue?`);
+      if (!ok) return;
+      window.location.href = `mailto:${encodeURIComponent(job.email_to_apply)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    }
+
+    function markApplication(id) {
+      const job = liveJobs.find(j => j.id === id);
+      if (!job) return;
+      if (liveAppliedIds.has(id)) liveAppliedIds.delete(id);
+      else if (confirm(`Only mark this application as applied AFTER you submitted it on the employer website or sent the email yourself.\nDid you complete the application for ${job.title} at ${job.company}?`)) liveAppliedIds.add(id);
+      try { localStorage.setItem('careerpilot_marked_applied_v1', JSON.stringify([...liveAppliedIds])); } catch (_) {}
+      renderApplicatorHub();
+    }
+
+    // =========================================================================
+    // 8. Modals
+    // =========================================================================
+    function openResumeModal() {
+      document.getElementById('resume-modal').classList.remove('hidden');
+    }
+    function closeResumeModal() {
+      document.getElementById('resume-modal').classList.add('hidden');
+    }
+
+    function loadPresetCandidate(key) {
+      activeCandidate = JSON.parse(JSON.stringify(presetCandidates[key]));
+      resumeUploaded = false; // preset profiles are demos, not user-submitted CVs
+      document.getElementById('input-cand-name').value = activeCandidate.name;
+      document.getElementById('input-cand-role').value = activeCandidate.role;
+      document.getElementById('input-cand-exp').value = activeCandidate.experience;
+      document.getElementById('input-cand-degree').value = activeCandidate.degree;
+      document.getElementById('input-cand-skills').value = activeCandidate.skills.join(', ');
+      document.getElementById('input-cand-bullets').value = activeCandidate.bullets.join('\n');
+      
+      closeResumeModal();
+      liveProfileVersion++;
+      liveJobsLoaded = false;
+      liveJobs = [];
+      syncComparisonJobs();
+      renderCandidateUI();
+      showToast(`Profile switched to ${activeCandidate.name}! Resume-specific interview plan and ATS scores are updating.`, 'success');
+    }
+
+    async function handleFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const status = document.getElementById('upload-status-text');
+      if (file.size > 10*1024*1024) {
+        showToast('File exceeds 10 MB maximum.', 'warning'); return;
+      }
+      status.innerText = `Reading ${file.name}...`;
+      try {
+        const form = new FormData();
+        form.append('file', file);
+        const result = await apiJSON('/api/resume/upload', {method:'POST', body:form});
+        applyExtractedResume(result.candidate);
+        status.innerText = `Resume loaded: ${result.extracted_characters} characters extracted`;
+        status.className = 'text-[11px] text-emerald-600 font-mono mt-1';
+      } catch(error) {
+        status.innerText = 'Upload error: ' + error.message;
+        status.className = 'text-[11px] text-rose-600 font-mono mt-1';
+        showToast(error.message,'warning');
+      } finally {
+        event.target.value = ''; // permits uploading the same file again
+      }
+    }
+
+    function applyExtractedResume(candidate) {
+      if (!candidate || !candidate.name) throw new Error('No candidate information extracted');
+      activeCandidate = candidate;
+      document.getElementById('input-cand-name').value = candidate.name;
+      document.getElementById('input-cand-role').value = candidate.role;
+      document.getElementById('input-cand-exp').value = Number(candidate.experience||0);
+      document.getElementById('input-cand-degree').value = candidate.degree;
+      document.getElementById('input-cand-skills').value = candidate.skills.join(', ');
+      document.getElementById('input-cand-bullets').value = candidate.bullets.join('\n');
+      closeResumeModal();
+      renderCandidateUI();
+      resumeUploaded = true;
+      const profileSubtitle = document.getElementById('profile-subtitle');
+      if (profileSubtitle) profileSubtitle.textContent = `${(activeCandidate.skills||[]).length} skills · ${(activeCandidate.bullets||[]).length} projects · Resume ready.`;
+      liveProfileVersion++;
+      liveJobsLoaded = false;
+      liveJobs = [];
+      syncComparisonJobs();
+      renderApplicatorHub();
+      if (!liveJobsLoading) fetchLiveJobBoards();
+      showToast(`Resume extracted for ${candidate.name}. Review the details and start your interview.`, 'success');
+    }
+
+
+        function saveCustomResume() {
+      const name = document.getElementById('input-cand-name').value.trim() || "Candidate";
+      const role = document.getElementById('input-cand-role').value.trim() || "Data Scientist";
+      const exp = Number(document.getElementById('input-cand-exp').value) || 0;
+      const degree = document.getElementById('input-cand-degree').value.trim() || "B.Tech";
+      const skillsStr = document.getElementById('input-cand-skills').value;
+      const skills = skillsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
+      const bulletsStr = document.getElementById('input-cand-bullets').value;
+      const bullets = bulletsStr.split('\n').map(b => b.trim()).filter(b => b.length > 0);
+
+      activeCandidate = {
+        ...activeCandidate, name, role, experience:exp, degree,
+        recentRole: role, skills, bullets
+      };
+
+      closeResumeModal();
+      resumeUploaded = true; // manually entered candidate profile, not a preloaded demo
+      const profileSubtitle = document.getElementById('profile-subtitle');
+      if (profileSubtitle) profileSubtitle.textContent = `${skills.length} skills · ${bullets.length} projects · Profile ready.`;
+      liveProfileVersion++;
+      liveJobsLoaded = false;
+      liveJobs = [];
+      syncComparisonJobs();
+      renderCandidateUI();
+      if (!liveJobsLoading) fetchLiveJobBoards();
+      showToast(`✅ Active profile updated for ${name}!`, 'success');
+    }
+
+    function openCustomJobModal() {
+      document.getElementById('job-modal').classList.remove('hidden');
+    }
+    function closeCustomJobModal() {
+      document.getElementById('job-modal').classList.add('hidden');
+    }
+
+    function saveCustomJob() {
+      const title = document.getElementById('custom-job-title').value.trim();
+      const company = document.getElementById('custom-job-company').value.trim();
+      const exp = parseFloat(document.getElementById('custom-job-exp').value) || 1.0;
+      const skillsStr = document.getElementById('custom-job-skills').value;
+      const skills = skillsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
+      const desc = document.getElementById('custom-job-desc').value.trim();
+
+      const customJob = {
+        id: `custom_${Date.now()}`,
+        title: title,
+        company: company,
+        location: "Custom Location",
+        domain: "data_science",
+        requiredSkills: skills,
+        minExp: exp,
+        posted_time: "Just now",
+        is_late: false,
+        recency_tag: "🔥 Fresh Opening",
+        applicant_count: 1,
+        desc: desc,
+        status: "ready",
+        appliedAt: null
+      };
+
+      if (!title || !company || !skills.length) { showToast('Enter job title, company and at least one required skill.','warning'); return; }
+      customJob.isLive = false;
+      customJobs.push(customJob);
+      targetJobs = [...liveJobs.map(liveJobAsTarget), ...customJobs];
+      currentJobIndex = targetJobs.length - 1;
+      tailorJobIndex = currentJobIndex;
+
+      populateJobDropdowns();
+      closeCustomJobModal();
+      runLiveEvaluation();
+      renderTailoringUI();
+      renderApplicatorHub();
+      showToast(`Custom job description selected: ${title} at ${company} (not a live opening).`, 'success');
+    }
+
+    // Initialize UI on Page Load
+    renderCandidateUI();
+  </script>
+</body>
+</html>

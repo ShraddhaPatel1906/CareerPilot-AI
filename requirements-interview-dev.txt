@@ -1,0 +1,3 @@
+-r requirements-interview.txt
+pytest>=8.2.0
+reportlab>=4.0.0

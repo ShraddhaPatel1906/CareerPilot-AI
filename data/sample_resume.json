@@ -1,0 +1,39 @@
+{
+  "candidate_id": "cand_94821",
+  "full_name": "Arjun Sharma",
+  "email": "arjun.sharma.tech@gmail.com",
+  "phone": "+91-9876543210",
+  "linkedin_url": "https://linkedin.com/in/arjun-sharma-ai",
+  "github_url": "https://github.com/arjun-sharma",
+  "total_experience_years": 3.5,
+  "seniority_level": 2,
+  "education": [
+    {
+      "institution": "Indian Institute of Technology",
+      "degree": "Bachelor of Technology",
+      "degree_level": 2,
+      "field_of_study": "Computer Science & Engineering",
+      "graduation_year": 2022
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp_1",
+      "company": "Cognitive Scale AI",
+      "role": "AI / ML Engineer",
+      "start_date": "2022-07",
+      "end_date": "Present",
+      "responsibilities": [
+        "Built predictive machine learning models using XGBoost and LightGBM processing 500k+ daily transactions.",
+        "Engineered asynchronous FastAPI microservices and Docker containers deployed to AWS ECS.",
+        "Integrated Sentence-Transformers for semantic search and Qdrant vector retrieval."
+      ],
+      "skills_used": ["Python", "XGBoost", "FastAPI", "Docker", "AWS", "PyTorch"]
+    }
+  ],
+  "verified_skills": [
+    "Python", "PyTorch", "XGBoost", "FastAPI", "Docker",
+    "AWS", "LangGraph", "Sentence-Transformers", "SQL", "Git"
+  ],
+  "raw_resume_text": "Arjun Sharma AI / ML Engineer with 3.5 years experience building XGBoost models, FastAPI microservices, and Docker containers in AWS."
+}
